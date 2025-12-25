@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.3, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9145782744074379570}
@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 6321311266704365925}
   - component: {fileID: 8962865488131625892}
   - component: {fileID: 930379351742394974}
+  - component: {fileID: 7254737361765358761}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -227,6 +228,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d9e0a55ca45eb4a8179e9e9a595de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectGame.Features.Player.Components.InputSystemReader
+--- !u!114 &7254737361765358761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2736846885862391599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab5a49a72ac9214c8c83dc701c62bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.ScreenWrap.ScreenWrap
+  Buffer: 0.5
+  DrawBounds: 1
 --- !u!1 &6178054735907171510
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +269,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9145782744074379570}

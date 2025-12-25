@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: a1ae0ae2e5ac377418dc6108b79770ed
+  m_SerializeEntries:
+  - m_GUID: 20e840c050b8e3249bdaa0540987d7b2
+    m_Address: Assets/ProjectGame/GamePlay/Addressables/LevelObject.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77a3f19a04dab0c49960049bcde72127
+    m_Address: Player_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86ccff9db5df3ab45bba4f31e2147ff9
+    m_Address: Assets/ProjectGame/GameHud/Prefabs/Addressables/NormalGameHud.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ca9f5a9d2a3a0a42b9e3a268aa6aa39
+    m_Address: Assets/ProjectCore/Addressables/ApplicationFlowController.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afa46dc6bf8e8a04f971c99e82191221
+    m_Address: MobileControls_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb85561551153ac48997de848f54b5f5
+    m_Address: Assets/ProjectGame/LevelFailView/Prefabs/Addressables/LevelFailView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f22b36b6037d5b04f8807acc101f6786
+    m_Address: Assets/ProjectGame/MainMenuView/Prefabs/Addressables/MainMenuView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 9dfc0fe536e52d44ba56edcf927f3568, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 98faff4959b727241ac3160644844d3f, type: 2}
+    - {fileID: 11400000, guid: 84c36e916a144644d864aa4ed222139e, type: 2}

@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.madratzz.scriptableobject.architecture": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.architecture-0.0.4.tgz",
+    "com.madratzz.scriptableobject.event.variables": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.event.variables-0.0.1.tgz",
+    "com.madratzz.scriptableobject.eventsystem.core": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.eventsystem.core-0.0.3.tgz",
+    "com.madratzz.scriptableobject.eventsystem.extensions": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.eventsystem.extensions-0.0.3.tgz",
+    "com.madratzz.scriptableobject.statemachine.core": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.statemachine.core-0.0.3.tgz",
+    "com.madratzz.scriptableobject.time.machine": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.time.machine-0.0.2.tgz",
+    "com.madratzz.scriptableobject.variables": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.variables-0.0.3.tgz",
+    "com.madratzz.scriptableobject.variables.database": "file:../ThirdPartyPackages/com.madratzz.scriptableobject.variables.database-0.0.3.tgz",
+    "com.madratzz.utilities.extensions": "file:../ThirdPartyPackages/com.madratzz.utilities.extensions-0.0.3.tgz",
+    "com.madratzz.utilities.unity.alwaysstartfromscenezero": "file:../ThirdPartyPackages/com.madratzz.utilities.unity.alwaysstartfromscenezero-0.0.1.tgz",
     "com.unity.2d.animation": "13.0.2",
     "com.unity.2d.aseprite": "3.0.1",
     "com.unity.2d.psdimporter": "12.0.1",

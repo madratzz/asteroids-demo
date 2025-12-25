@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef87c72153a79f8449c6f15bda605f6c, type: 3}
+  m_Name: NormalGameState
+  m_EditorClassIdentifier: 
+  PausesPreviousState: 0
+  GameHudReference:
+    m_AssetGUID: 86ccff9db5df3ab45bba4f31e2147ff9
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  GameStateStart: {fileID: 11400000, guid: ab3588b792f3d1c40bb37a738743b8b3, type: 2}
+  GameStateResume: {fileID: 11400000, guid: 93a9e387498a7b841972c35504acd81d, type: 2}
+  GameStateExit: {fileID: 11400000, guid: 6a000214faa5c634c8ee8c264bda88fc, type: 2}
+  GameStatePause: {fileID: 11400000, guid: 88db4c6575460954e8bdd9eed9c23336, type: 2}
+  LevelFail: {fileID: 11400000, guid: 85eca93865a6f324285ad513bc47253f, type: 2}
+  LevelComplete: {fileID: 11400000, guid: 415fa0653b279794c8cf8a0968929176, type: 2}
+  ShowBannerAd: {fileID: 0}
+  HideBannerAd: {fileID: 0}
+  GameLevel: {fileID: 11400000, guid: 2f6088f4b37fd3b48a6cadc10dd301b7, type: 2}
+  LevelEnvironmentReference:
+    m_AssetGUID: 20e840c050b8e3249bdaa0540987d7b2
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

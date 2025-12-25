@@ -1,0 +1,28 @@
+{
+    "name": "Project.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:b63dc67c4464e04409102f5a6f75a2a4",
+        "GUID:ca469d0170fdf4b23b857383d1c7814c",
+        "GUID:45f09d31ac3ef1f49804ebf876381b76",
+        "GUID:be2a4d132eddb4e66b10091f7bb5d2a9",
+        "GUID:7b8bb994a55c94813b86f42b3bb73de2",
+        "GUID:21c7a3a8e8e66c4479e42d0e5e608124",
+        "GUID:73d1da8ad54e6bd46b78559162409eb5",
+        "GUID:caee7793369714a699fc7a2677d74883",
+        "GUID:2ddf717bfadf64906b9bf61aa170beaf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

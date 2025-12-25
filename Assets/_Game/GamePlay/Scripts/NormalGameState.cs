@@ -1,19 +1,21 @@
 using System.Collections;
 using ProjectCore.Utilities;
-using ProjectCore.Variables;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace ProjectCore.GamePlay
 {
     [CreateAssetMenu(fileName = "NormalGameState", menuName = "ProjectCore/State Machine/States/Normal Game State")]
     public class NormalGameState : GameState
     {
-        [Header("Level Configuration")]
-        [SerializeField] private Int GameLevel;
-
         //GameStateEnvironment
+        [Header("NormalGameState Assets (Addressables)")]
         [SerializeField] private AssetReferenceGameObject LevelEnvironmentReference;
+        [SerializeField] private AssetReferenceGameObject PlayerShipReference;
+        
+        private AsyncOperationHandle<GameObject> _playerHandle;
+        private GameObject _playerInstance;
         
         public override IEnumerator Execute()
         {
@@ -22,6 +24,8 @@ namespace ProjectCore.GamePlay
             
             //Load the Gameplay Objects
             yield return InstantiateLevelObject();
+            
+            yield return InstantiatePlayerRoutine();
 
             //Start the Game Flow
             GameStateStart.Invoke();
@@ -29,7 +33,7 @@ namespace ProjectCore.GamePlay
             
         }
 
-        private object InstantiateLevelObject()
+        private IEnumerator InstantiateLevelObject()
         {
             return AddressablesHelper.InstantiateGameObject(
                 LevelEnvironmentReference,
@@ -42,10 +46,40 @@ namespace ProjectCore.GamePlay
                 this
             );
         }
+        
+        private IEnumerator InstantiatePlayerRoutine()
+        {
+            Vector3 spawnPos = Vector3.zero;
+            Quaternion spawnRot = Quaternion.identity;
+            
+            yield return AddressablesHelper.InstantiateGameObject(
+                PlayerShipReference,
+                (playerObj, handle) =>
+                {
+                    _playerInstance = playerObj;
+                    _playerHandle = handle;
+                    
+                    _playerInstance.transform.SetPositionAndRotation(spawnPos, spawnRot);
+                },
+                () => Debug.LogError("Failed to load Player Ship!"),
+                this
+            );
+        }
 
         private void LogLevelStartedEvent()
         {
-            Debug.Log($"[NormalGameState] Level {GameLevel.GetValue()} Started.");
+            Debug.Log($"[NormalGameState] Level Started.");
+        }
+        
+        protected override void ResetState()
+        {
+            base.ResetState();
+            
+            if (_playerHandle.IsValid())
+            {
+                Addressables.ReleaseInstance(_playerHandle);
+            }
+            _playerInstance = null;
         }
     }
 }

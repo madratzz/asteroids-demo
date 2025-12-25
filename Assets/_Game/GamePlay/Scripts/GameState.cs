@@ -13,7 +13,7 @@ namespace ProjectCore.GamePlay
 {
     public class GameState : State
     {
-        [Header("Assets (Addressables)")]
+        [Header("BaseGameState Assets (Addressables)")]
         [SerializeField] protected AssetReferenceGameObject GameHudReference;
 
         [Header("Events")]
@@ -23,9 +23,6 @@ namespace ProjectCore.GamePlay
         [SerializeField] protected GameEvent GameStatePause;
         
         [SerializeField] protected GameEvent LevelFail;
-        [SerializeField] protected GameEvent LevelComplete;
-        [SerializeField] protected GameEvent ShowBannerAd;
-        [SerializeField] protected GameEvent HideBannerAd;
         
         // Runtime Handles (To track memory)
         protected AsyncOperationHandle<GameObject> _hudHandle;
@@ -34,7 +31,6 @@ namespace ProjectCore.GamePlay
         [NonSerialized] protected GameHud _gameHud;
         [NonSerialized] protected GameObject _levelObject;
         
-        [NonSerialized] protected bool _failReported = false;
         
         public override IEnumerator Init(IState listener)
         {

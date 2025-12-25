@@ -24,12 +24,14 @@ MonoBehaviour:
   GameStateExit: {fileID: 11400000, guid: 6a000214faa5c634c8ee8c264bda88fc, type: 2}
   GameStatePause: {fileID: 11400000, guid: 88db4c6575460954e8bdd9eed9c23336, type: 2}
   LevelFail: {fileID: 11400000, guid: 85eca93865a6f324285ad513bc47253f, type: 2}
-  LevelComplete: {fileID: 11400000, guid: 415fa0653b279794c8cf8a0968929176, type: 2}
-  ShowBannerAd: {fileID: 0}
-  HideBannerAd: {fileID: 0}
-  GameLevel: {fileID: 11400000, guid: 2f6088f4b37fd3b48a6cadc10dd301b7, type: 2}
   LevelEnvironmentReference:
     m_AssetGUID: 20e840c050b8e3249bdaa0540987d7b2
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  PlayerShipReference:
+    m_AssetGUID: 77a3f19a04dab0c49960049bcde72127
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

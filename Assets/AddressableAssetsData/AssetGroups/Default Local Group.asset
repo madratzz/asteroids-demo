@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afa46dc6bf8e8a04f971c99e82191221
+    m_Address: MobileControls_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb85561551153ac48997de848f54b5f5
     m_Address: Assets/ProjectGame/LevelFailView/Prefabs/Addressables/LevelFailView.prefab
     m_ReadOnly: 0

@@ -29,7 +29,7 @@ namespace ProjectCore.GamePlay
             
         }
 
-        private object InstantiateLevelObject()
+        private IEnumerator InstantiateLevelObject()
         {
             return AddressablesHelper.InstantiateGameObject(
                 LevelEnvironmentReference,

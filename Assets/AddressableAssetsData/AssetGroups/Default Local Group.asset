@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77a3f19a04dab0c49960049bcde72127
+    m_Address: Player_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86ccff9db5df3ab45bba4f31e2147ff9
     m_Address: Assets/ProjectGame/GameHud/Prefabs/Addressables/NormalGameHud.prefab
     m_ReadOnly: 0

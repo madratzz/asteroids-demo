@@ -22,7 +22,7 @@ namespace ProjectGame.Features.ScreenWrap
             RecalculateBounds();
         }
 
-        public void RecalculateBounds()
+        private void RecalculateBounds()
         {
             if (_cam == null) _cam = Camera.main;
             if (_cam == null) return;
@@ -42,37 +42,23 @@ namespace ProjectGame.Features.ScreenWrap
 
         private void Update()
         {
-            Vector3 pos = transform.position;
-            bool hasTeleported = false;
-
-            // Horizontal Wrap
-            if (pos.x > _rightConstraint + Buffer)
+            Vector3 currentPos = transform.position;
+            
+            float newX = CalculateWrappedPosition(currentPos.x, _leftConstraint, _rightConstraint);
+            float newY = CalculateWrappedPosition(currentPos.y, _bottomConstraint, _topConstraint);
+            
+            //Mathf.Approximately for safe float comparison
+            if (!Mathf.Approximately(currentPos.x, newX) || !Mathf.Approximately(currentPos.y, newY))
             {
-                pos.x = _leftConstraint - Buffer;
-                hasTeleported = true;
+                transform.position = new Vector3(newX, newY, currentPos.z);
             }
-            else if (pos.x < _leftConstraint - Buffer)
-            {
-                pos.x = _rightConstraint + Buffer;
-                hasTeleported = true;
-            }
-
-            // Vertical Wrap
-            if (pos.y > _topConstraint + Buffer)
-            {
-                pos.y = _bottomConstraint - Buffer;
-                hasTeleported = true;
-            }
-            else if (pos.y < _bottomConstraint - Buffer)
-            {
-                pos.y = _topConstraint + Buffer;
-                hasTeleported = true;
-            }
-
-            if (hasTeleported)
-            {
-                transform.position = pos;
-            }
+        }
+        
+        private float CalculateWrappedPosition(float current, float min, float max)
+        {
+            if (current > max + Buffer) return min - Buffer;
+            if (current < min - Buffer) return max + Buffer;
+            return current;
         }
         
         

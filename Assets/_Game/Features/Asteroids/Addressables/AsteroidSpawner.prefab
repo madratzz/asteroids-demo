@@ -102,7 +102,7 @@ MonoBehaviour:
   LargePool: {fileID: 986522871588601760}
   MediumPool: {fileID: 8491942988758823164}
   SmallPool: {fileID: 8811285905856193039}
-  BaseSpeed: 4
+  BaseSpeed: 1
   SpawnBuffer: 2
 --- !u!1 &7080036549630109281
 GameObject:

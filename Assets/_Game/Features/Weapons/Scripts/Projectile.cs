@@ -1,4 +1,5 @@
 ﻿using System;
+using ProjectGame.Core.Interfaces;
 using UnityEngine;
 using ProjectGame.Features.Weapons.Logic;
 
@@ -48,7 +49,11 @@ namespace ProjectGame.Features.Weapons
             
             // For now, just disappear if we hit something that isn't the player
             // (We will add Layer checks later to prevent shooting yourself)
-            Release();
+            if (other.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.TakeDamage(1);
+                Release();
+            }
         }
 
         private void Release()

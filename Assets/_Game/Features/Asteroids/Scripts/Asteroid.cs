@@ -1,14 +1,23 @@
 using System;
+using ProjectCore.Events;
+using ProjectCore.Variables;
+using ProjectGame.Core.Interfaces;
 using UnityEngine;
-using ProjectGame.Features.ScreenWrap;
 using Random = UnityEngine.Random;
 
 namespace ProjectGame.Features.Enemies
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(ScreenWrap.ScreenWrap))]
-    public class Asteroid : MonoBehaviour
+    public class Asteroid : MonoBehaviour, IDamageable
     {
+        [Header("Config")]
+        [SerializeField] private int ScoreValue = 100;
+        
+        [Header("Architecture Dependencies")]
+        [SerializeField] private Int CurrentPlayerScore; 
+        [SerializeField] private GameEvent EnemyDestroyed;
+        
         private Rigidbody2D _rb;
         private Action<Asteroid> _returnToPool;
 
@@ -43,8 +52,26 @@ namespace ProjectGame.Features.Enemies
         {
             // TODO: If hit by bullet -> Die and Score
             // TODO: If hit by player -> Game Over
+        }
+        
+        public void TakeDamage(int amount)
+        {
+            Die();
+        }
+
+        private void Die()
+        {
+            if (CurrentPlayerScore != null)
+            {
+                CurrentPlayerScore.ApplyChange(ScoreValue); 
+            }
             
-            // For now, let's just create a method to kill it
+            if (EnemyDestroyed != null)
+            {
+                EnemyDestroyed.Invoke();
+            }
+            
+            Release();
         }
 
         public void Release()

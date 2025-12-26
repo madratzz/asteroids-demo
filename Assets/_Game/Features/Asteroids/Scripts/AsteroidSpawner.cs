@@ -13,7 +13,7 @@ namespace ProjectGame.Features.Enemies
 
         
         [Header("Wave Config")]
-        [SerializeField] private float BaseSpeed = 4.0f;
+        [SerializeField] private float BaseSpeed = 1.0f;
         [SerializeField] private float SpawnBuffer = 2.0f;
 
         private int _activeAsteroidCount = 0;
@@ -50,16 +50,11 @@ namespace ProjectGame.Features.Enemies
 
         private void Update()
         {
-            // Check for Wave Clear
-            if (!_isSpawning && _activeAsteroidCount <= 0)
-            {
-                // Safety check to ensure pools are loaded before starting logic
-                if (LargePool.IsReady) 
-                {
-                    Debug.Log($"Wave {_waveLogic.CurrentWave} Complete. Starting Next...");
-                    StartNextWave();
-                }
-            }
+            if (_isSpawning || _activeAsteroidCount > 0) return;
+            if (!LargePool.IsReady) return;
+            
+            Debug.Log($"Wave {_waveLogic.CurrentWave} Complete. Starting Next...");
+            StartNextWave();
         }
         
         private void StartNextWave()

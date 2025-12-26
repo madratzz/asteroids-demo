@@ -161,7 +161,7 @@ Transform:
   m_Children:
   - {fileID: 9145782744074379570}
   - {fileID: 2535201266055154027}
-  - {fileID: 342807840562250748}
+  - {fileID: 8660911867864898882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4451499391445641420
@@ -257,12 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd30cc4657f4d32b12ddd9d5b8af769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Weapons.WeaponController
-  ProjectileReference:
-    m_AssetGUID: 9ccd74cffa2db7b4ba67d8db494ff03a
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
+  ProjectilePool: {fileID: 7524401357050728212}
   FirePoint: {fileID: 342807840562250748}
 --- !u!1 &3814621060710112140
 GameObject:
@@ -288,13 +283,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3814621060710112140}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.571, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3374654325481834565}
-  m_Father: {fileID: 2719968176516104794}
+  m_Father: {fileID: 8660911867864898882}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6178054735907171510
 GameObject:
@@ -432,6 +427,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.ScreenWrap.ScreenWrapDebugger
   _showGizmos: 1
+--- !u!1 &6648474445356275443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8660911867864898882}
+  - component: {fileID: 7524401357050728212}
+  m_Layer: 0
+  m_Name: WeaponSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8660911867864898882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648474445356275443}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 342807840562250748}
+  m_Father: {fileID: 2719968176516104794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7524401357050728212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6648474445356275443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb5578eeaa94c4d8b039b96ebff154e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Weapons.ProjectilePool
+  PrefabReference:
+    m_AssetGUID: 9ccd74cffa2db7b4ba67d8db494ff03a
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  DefaultCapacity: 10
+  MaxSize: 50
 --- !u!1 &8235275913842636531
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +491,7 @@ GameObject:
   - component: {fileID: 3374654325481834565}
   - component: {fileID: 647852744426897761}
   m_Layer: 0
-  m_Name: Square
+  m_Name: FirePointVisualizer
   m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

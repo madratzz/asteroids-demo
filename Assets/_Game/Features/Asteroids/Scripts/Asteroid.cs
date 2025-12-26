@@ -12,6 +12,7 @@ namespace ProjectGame.Features.Enemies
     public class Asteroid : MonoBehaviour, IDamageable
     {
         [Header("Config")]
+        [SerializeField] private AsteroidSize Size;
         [SerializeField] private int ScoreValue = 100;
         
         [Header("Architecture Dependencies")]
@@ -20,6 +21,7 @@ namespace ProjectGame.Features.Enemies
         
         private Rigidbody2D _rb;
         private Action<Asteroid> _returnToPool;
+        private Action<AsteroidSize, Vector3> _splitAction;
 
         private void Awake()
         {
@@ -30,10 +32,13 @@ namespace ProjectGame.Features.Enemies
             _rb.linearDamping = 0; 
             _rb.angularDamping = 0;
         }
-
-        public void Initialize(Vector2 position, float speed, Action<Asteroid> returnAction)
+        
+        public void Initialize(Vector2 position, float speed, Action<Asteroid> returnAction, 
+            Action<AsteroidSize, Vector3> splitAction)
         {
             _returnToPool = returnAction;
+            _splitAction = splitAction;
+            
             transform.position = position;
 
             // Randomize Rotation
@@ -43,15 +48,12 @@ namespace ProjectGame.Features.Enemies
             // Randomize Direction (Any random direction)
             Vector2 randomDir = Random.insideUnitCircle.normalized;
             
+            // Small asteroids move faster than large ones
+            float speedMultiplier = (Size == AsteroidSize.Small) ? 1.5f : 1.0f;
+            
             // Physics
-            _rb.linearVelocity = randomDir * speed;
+            _rb.linearVelocity = randomDir * (speed * speedMultiplier);
             _rb.angularVelocity = Random.Range(-50f, 50f); // Spin
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            // TODO: If hit by bullet -> Die and Score
-            // TODO: If hit by player -> Game Over
         }
         
         public void TakeDamage(int amount)
@@ -61,15 +63,10 @@ namespace ProjectGame.Features.Enemies
 
         private void Die()
         {
-            if (CurrentPlayerScore != null)
-            {
-                CurrentPlayerScore.ApplyChange(ScoreValue); 
-            }
+            if (CurrentPlayerScore != null) CurrentPlayerScore.ApplyChange(ScoreValue);
+            if (EnemyDestroyed != null) EnemyDestroyed.Invoke();
             
-            if (EnemyDestroyed != null)
-            {
-                EnemyDestroyed.Invoke();
-            }
+            _splitAction?.Invoke(Size, transform.position);
             
             Release();
         }

@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2101481319821337578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 335246795733072979}
+  - component: {fileID: 986522871588601760}
+  m_Layer: 0
+  m_Name: AsteroidPool_L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &335246795733072979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101481319821337578}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 581291676588071493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &986522871588601760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101481319821337578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12596bb5deee428a907168812f50c47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Enemies.AsteroidPool
+  PrefabReference:
+    m_AssetGUID: 5f5036ac649cf65449def4f1dfde72c2
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  DefaultCapacity: 10
+  MaxSize: 50
 --- !u!1 &3045226588783149941
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +62,6 @@ GameObject:
   m_Component:
   - component: {fileID: 581291676588071493}
   - component: {fileID: 655789190204890038}
-  - component: {fileID: 4641520727814613688}
   m_Layer: 0
   m_Name: AsteroidSpawner
   m_TagString: Untagged
@@ -30,7 +81,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 335246795733072979}
+  - {fileID: 3629112441599065350}
+  - {fileID: 6645006958227413845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &655789190204890038
@@ -45,24 +99,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd2635be7c0467daadec58d3b8cc715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Enemies.AsteroidSpawner
-  _pool: {fileID: 4641520727814613688}
-  _spawnRate: 2
-  _asteroidSpeed: 5
-  _spawnDistanceBuffer: 2
---- !u!114 &4641520727814613688
+  LargePool: {fileID: 986522871588601760}
+  MediumPool: {fileID: 8491942988758823164}
+  SmallPool: {fileID: 8811285905856193039}
+  BaseSpeed: 1
+  SpawnBuffer: 2
+--- !u!1 &7080036549630109281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6645006958227413845}
+  - component: {fileID: 8811285905856193039}
+  m_Layer: 0
+  m_Name: AsteroidPool_S
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6645006958227413845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7080036549630109281}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 581291676588071493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8811285905856193039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3045226588783149941}
+  m_GameObject: {fileID: 7080036549630109281}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12596bb5deee428a907168812f50c47f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Enemies.AsteroidPool
   PrefabReference:
-    m_AssetGUID: 5f5036ac649cf65449def4f1dfde72c2
+    m_AssetGUID: 1336332f33e4ae84c9474de5ddbc87a9
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  DefaultCapacity: 10
+  MaxSize: 50
+--- !u!1 &7474344336622259860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3629112441599065350}
+  - component: {fileID: 8491942988758823164}
+  m_Layer: 0
+  m_Name: AsteroidPool_M
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3629112441599065350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7474344336622259860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 581291676588071493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8491942988758823164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7474344336622259860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12596bb5deee428a907168812f50c47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Enemies.AsteroidPool
+  PrefabReference:
+    m_AssetGUID: c33695d874f884144b08629fb68613e0
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 

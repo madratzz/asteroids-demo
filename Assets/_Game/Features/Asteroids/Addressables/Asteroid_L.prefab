@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 540038944920936395}
   - component: {fileID: 266407467693936905}
   m_Layer: 0
-  m_Name: Asteroid
+  m_Name: Asteroid_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd740671b155d44bba4d9ea9c145a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.Enemies.Asteroid
-  ScoreValue: 100
+  Size: 2
+  ScoreValue: 20
   CurrentPlayerScore: {fileID: 11400000, guid: e0e9ecdd98ec3974087dfb2ae4fc1f25, type: 2}
   EnemyDestroyed: {fileID: 11400000, guid: c4986ae7ed5717449be24531bbe94da6, type: 2}
 --- !u!1 &6823477668010528019

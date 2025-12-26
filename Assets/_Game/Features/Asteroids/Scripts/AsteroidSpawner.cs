@@ -1,23 +1,40 @@
 ﻿using UnityEngine;
 using ProjectGame.Features.Enemies.Logic;
+using UnityEngine.Serialization;
 
 namespace ProjectGame.Features.Enemies
 {
     public class AsteroidSpawner : MonoBehaviour
     {
-        [Header("Dependencies")]
-        [SerializeField] private AsteroidPool _pool;
+        [Header("Pools")]
+        [SerializeField] private AsteroidPool LargePool;
+        [SerializeField] private AsteroidPool MediumPool;
+        [SerializeField] private AsteroidPool SmallPool;
 
-        [Header("Config")]
-        [SerializeField] private float _spawnRate = 2.0f;
-        [SerializeField] private float _asteroidSpeed = 5.0f;
-        [SerializeField] private float _spawnDistanceBuffer = 2.0f;
+        
+        [Header("Wave Config")]
+        [SerializeField] private float BaseSpeed = 1.0f;
+        [SerializeField] private float SpawnBuffer = 2.0f;
 
-        private readonly AsteroidSpawnerLogic _logic = new AsteroidSpawnerLogic();
+        private int _activeAsteroidCount = 0;
+        private bool _isSpawning;
+        
+        private readonly WaveLogic _waveLogic = new WaveLogic();
+        private readonly AsteroidSpawnerLogic _spawnLogic = new AsteroidSpawnerLogic();
+        
         private Camera _cam;
+        
         private float _camHeight;
         private float _camWidth;
 
+        private void OnEnable()
+        {
+            // Reset logic when Game State starts
+            _waveLogic.Reset();
+            _activeAsteroidCount = 0;
+            StartNextWave();
+        }
+        
         private void Awake()
         {
             _cam = Camera.main;
@@ -33,24 +50,73 @@ namespace ProjectGame.Features.Enemies
 
         private void Update()
         {
-            if (_pool == null || !_pool.IsReady) return;
+            if (_isSpawning || _activeAsteroidCount > 0) return;
+            if (!LargePool.IsReady) return;
             
-            if (_logic.ShouldSpawn(Time.time, _spawnRate))
+            Debug.Log($"Wave {_waveLogic.CurrentWave} Complete. Starting Next...");
+            StartNextWave();
+        }
+        
+        private void StartNextWave()
+        {
+            _isSpawning = true;
+            
+            int wave = _waveLogic.NextWave();
+            int count = _waveLogic.CalculateAsteroidCount(wave);
+            float speed = _waveLogic.CalculateWaveSpeed(wave, BaseSpeed);
+
+            for (int i = 0; i < count; i++)
             {
-                Spawn();
+                SpawnAsteroid(AsteroidSize.Large, GetRandomEdgePosition(), speed);
             }
+
+            _isSpawning = false;
         }
 
-        private void Spawn()
+        private void SpawnAsteroid(AsteroidSize size, Vector2 position, float speed)
         {
-            // Ask the Brain: "Where should it go?"
-            Vector2 spawnPos = _logic.GetRandomSpawnPosition(_camHeight, _camWidth, _spawnDistanceBuffer);
+            // 1. Select Pool
+            AsteroidPool pool = size switch
+            {
+                AsteroidSize.Large => LargePool,
+                AsteroidSize.Medium => MediumPool,
+                AsteroidSize.Small => SmallPool,
+                _ => LargePool
+            };
 
-            // Get from Pool
-            Asteroid asteroid = _pool.Get();
+            if (pool == null || !pool.IsReady) return;
+
+            // 2. Spawn & Init
+            Asteroid asteroid = pool.Get();
             
-            // Initialize
-            asteroid.Initialize(spawnPos, _asteroidSpeed, _pool.Release);
+            // Pass 'HandleSplit' so the asteroid can tell us when it died
+            asteroid.Initialize(position, speed, pool.Release, HandleSplit);
+
+            _activeAsteroidCount++;
+        }
+        
+        private void HandleSplit(AsteroidSize size, Vector3 position)
+        {
+            _activeAsteroidCount--; // Parent died
+
+            // Determine Children
+            AsteroidSize? childSize = null;
+            if (size == AsteroidSize.Large) childSize = AsteroidSize.Medium;
+            else if (size == AsteroidSize.Medium) childSize = AsteroidSize.Small;
+
+            // Spawn Children
+            if (childSize.HasValue)
+            {
+                float speed = _waveLogic.CalculateWaveSpeed(_waveLogic.CurrentWave, BaseSpeed);
+                // Spawn 2 children
+                SpawnAsteroid(childSize.Value, position, speed);
+                SpawnAsteroid(childSize.Value, position, speed);
+            }
+        }
+        
+        private Vector2 GetRandomEdgePosition()
+        {
+            return _spawnLogic.GetRandomSpawnPosition(_camHeight, _camWidth, SpawnBuffer);
         }
     }
 }

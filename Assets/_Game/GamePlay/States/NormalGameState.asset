@@ -42,3 +42,4 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  CurrentPlayerScore: {fileID: 11400000, guid: e0e9ecdd98ec3974087dfb2ae4fc1f25, type: 2}

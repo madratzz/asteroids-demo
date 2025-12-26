@@ -36,3 +36,9 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  AsteroidSpawnerReference:
+    m_AssetGUID: 3a541e48d71d65b469d87e2ee73d9c12
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0

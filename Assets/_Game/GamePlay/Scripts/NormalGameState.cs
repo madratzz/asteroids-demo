@@ -1,5 +1,6 @@
 using System.Collections;
 using ProjectCore.Utilities;
+using ProjectCore.Variables;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -17,6 +18,9 @@ namespace ProjectCore.GamePlay
         [SerializeField] private AssetReferenceGameObject PlayerShipReference;
         [SerializeField] private AssetReferenceGameObject AsteroidSpawnerReference;
         
+        [Header("Game State Data")]
+        [SerializeField] private Int CurrentPlayerScore;
+        
         private AsyncOperationHandle<GameObject> _playerHandle;
         private GameObject _playerInstance;
         
@@ -25,6 +29,8 @@ namespace ProjectCore.GamePlay
         
         public override IEnumerator Execute()
         {
+            if (CurrentPlayerScore != null) CurrentPlayerScore.SetValue(0);
+            
             //Run Base (Loads HUD)
             yield return base.Execute();
             

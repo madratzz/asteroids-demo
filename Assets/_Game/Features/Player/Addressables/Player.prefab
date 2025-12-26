@@ -159,6 +159,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9145782744074379570}
+  - {fileID: 2535201266055154027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4451499391445641420
@@ -215,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4d90732b925434183ceef3d1f61a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectGame.Features.Player.Components.PlayerMotor
-  Settings: {fileID: 0}
+  Settings: {fileID: 11400000, guid: 183fd918b3677a74491a20c23fd09bbb, type: 2}
 --- !u!114 &930379351742394974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,7 +242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.ScreenWrap.ScreenWrap
   Buffer: 0.5
-  DrawBounds: 1
 --- !u!1 &6178054735907171510
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,3 +333,48 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &6644528008324836693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2535201266055154027}
+  - component: {fileID: 2147184929794335985}
+  m_Layer: 0
+  m_Name: DebugWrapVisualizer
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2535201266055154027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644528008324836693}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2719968176516104794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2147184929794335985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644528008324836693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8957e56ff6c442d385c0db3a2b958b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Runtime::ProjectGame.Features.ScreenWrap.ScreenWrapDebugger
+  _showGizmos: 1

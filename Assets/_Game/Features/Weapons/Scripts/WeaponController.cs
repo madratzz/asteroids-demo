@@ -4,6 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using ProjectGame.Features.Player.Configs;
 using ProjectGame.Features.Player.Interfaces;
+using ProjectGame.Features.Weapons.Logic;
 
 namespace ProjectGame.Features.Weapons
 {
@@ -17,13 +18,16 @@ namespace ProjectGame.Features.Weapons
         private IPlayerInput _input;
         private PlayerSettingsSO _settings;
         private ObjectPool<Projectile> _pool;
-        private float _nextFireTime;
         
         private GameObject _loadedPrefab; 
         private AsyncOperationHandle<GameObject> _prefabHandle;
-        private bool _isReady = false;
+        private bool _isReady;
         
         private Transform _poolContainer;
+        
+        private readonly WeaponLogic _weaponLogic = new WeaponLogic();
+        
+        private readonly string _poolGameObjectName = $"--- [Projectile Pool] ---";
 
         // Dependency Injection
         public void Initialize(IPlayerInput input, PlayerSettingsSO settings)
@@ -46,7 +50,7 @@ namespace ProjectGame.Features.Weapons
                 _loadedPrefab = handle.Result;
                 _prefabHandle = handle;
                 
-                GameObject containerObj = new GameObject("--- [Projectile Pool] ---");
+                GameObject containerObj = new GameObject(_poolGameObjectName);
                 _poolContainer = containerObj.transform;
                 
                 InitializePool();
@@ -78,7 +82,7 @@ namespace ProjectGame.Features.Weapons
         {
             if (_input == null || _settings == null || !_isReady) return;
 
-            if (_input.IsFiring && Time.time >= _nextFireTime)
+            if (_weaponLogic.ShouldFire(_input.IsFiring, Time.time, _settings.FireRate))
             {
                 Fire();
             }
@@ -86,8 +90,6 @@ namespace ProjectGame.Features.Weapons
 
         private void Fire()
         {
-            _nextFireTime = Time.time + _settings.FireRate;
-            
             Projectile bullet = _pool.Get();
 
             // Position it at the gun tip
@@ -98,7 +100,7 @@ namespace ProjectGame.Features.Weapons
             bullet.Initialize(
                 direction: transform.up, 
                 speed: _settings.BulletSpeed, 
-                lifetime: 2.0f, // Hardcoded for now, or add to SettingsSO
+                lifetime: _settings.BulletLifetime,
                 returnAction: _pool.Release 
             );
         }

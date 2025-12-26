@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using ProjectGame.Features.Weapons.Logic;
 
 namespace ProjectGame.Features.Weapons
 {
@@ -8,10 +9,8 @@ namespace ProjectGame.Features.Weapons
     public class Projectile : MonoBehaviour
     {
         private Rigidbody2D _rb;
-        private float _lifetime;
-        private float _spawnTime;
+        private readonly ProjectileLogic _logic = new ProjectileLogic();
         
-        // The callback to return this specific bullet to the pool
         private Action<Projectile> _returnToPool;
 
         private void Awake()
@@ -23,25 +22,21 @@ namespace ProjectGame.Features.Weapons
         public void Initialize(Vector2 direction, float speed, float lifetime, Action<Projectile> returnAction)
         {
             _returnToPool = returnAction;
-            _lifetime = lifetime;
-            _spawnTime = Time.time;
 
-            // Reset Physics (Crucial when reusing objects)
-            _rb.linearVelocity = Vector2.zero; // Unity 6 API
+            _logic.Initialize(Time.time, lifetime);
+            
+            // Reset Physics
+            _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0f;
-
-            // Set Position/Rotation logic is handled by the Spawner, 
-            // but we align "Up" to the direction here
+            
             transform.up = direction;
-
-            // Fire!
+            
             _rb.AddForce(direction * speed, ForceMode2D.Impulse);
         }
 
         private void Update()
         {
-            // Self-Cleanup: If I live too long, return to pool
-            if (Time.time >= _spawnTime + _lifetime)
+            if (_logic.IsExpired(Time.time))
             {
                 Release();
             }
@@ -58,10 +53,9 @@ namespace ProjectGame.Features.Weapons
 
         private void Release()
         {
-            // Reset velocity strictly to prevent "drifting" when respawned next time
+            // Prevent "drifting" when respawned next time
             _rb.linearVelocity = Vector2.zero;
             
-            // Call the pool to take me back
             _returnToPool?.Invoke(this); 
         }
     }

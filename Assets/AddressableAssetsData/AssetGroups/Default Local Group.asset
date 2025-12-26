@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ccd74cffa2db7b4ba67d8db494ff03a
+    m_Address: Bullet_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: afa46dc6bf8e8a04f971c99e82191221
     m_Address: MobileControls_Default
     m_ReadOnly: 0

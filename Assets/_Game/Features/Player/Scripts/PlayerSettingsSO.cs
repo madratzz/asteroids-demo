@@ -13,5 +13,6 @@ namespace ProjectGame.Features.Player.Configs
         [Header("Shooting")]
         public float FireRate = 0.25f;
         public float BulletSpeed = 20f;
+        public float BulletLifetime = 1f;
     }
 }

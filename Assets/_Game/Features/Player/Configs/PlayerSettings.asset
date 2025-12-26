@@ -17,3 +17,4 @@ MonoBehaviour:
   DragFactor: 1
   FireRate: 0.25
   BulletSpeed: 20
+  BulletLifetime: 0.5

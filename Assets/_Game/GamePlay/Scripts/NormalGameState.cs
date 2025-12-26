@@ -10,12 +10,18 @@ namespace ProjectCore.GamePlay
     public class NormalGameState : GameState
     {
         //GameStateEnvironment
-        [Header("NormalGameState Assets (Addressables)")]
+        [Header("Scene Assets")]
         [SerializeField] private AssetReferenceGameObject LevelEnvironmentReference;
+        
+        [Header("Gameplay Actors")]
         [SerializeField] private AssetReferenceGameObject PlayerShipReference;
+        [SerializeField] private AssetReferenceGameObject AsteroidSpawnerReference;
         
         private AsyncOperationHandle<GameObject> _playerHandle;
         private GameObject _playerInstance;
+        
+        private AsyncOperationHandle<GameObject> _asteroidSpawnerHandle;
+        private GameObject _asteroidSpawnerInstance;
         
         public override IEnumerator Execute()
         {
@@ -24,13 +30,12 @@ namespace ProjectCore.GamePlay
             
             //Load the Gameplay Objects
             yield return InstantiateLevelObject();
-            
             yield return InstantiatePlayerRoutine();
+            yield return InstantiateAsteroidSpawnerRoutine();
 
             //Start the Game Flow
             GameStateStart.Invoke();
             LogLevelStartedEvent();
-            
         }
 
         private IEnumerator InstantiateLevelObject()
@@ -65,6 +70,25 @@ namespace ProjectCore.GamePlay
                 this
             );
         }
+        
+        private IEnumerator InstantiateAsteroidSpawnerRoutine()
+        {
+            // Instantiates the bundled "EnemySystem" prefab at (0,0,0)
+            yield return AddressablesHelper.InstantiateGameObject(
+                AsteroidSpawnerReference,
+                (systemObj, handle) =>
+                {
+                    _asteroidSpawnerInstance = systemObj;
+                    _asteroidSpawnerHandle = handle;
+                    
+                    // Optional: If you needed to configure difficulty, you could grab the component here
+                    // var spawner = _enemySystemInstance.GetComponent<AsteroidSpawner>();
+                    // spawner.SetDifficulty(Hard);
+                },
+                () => Debug.LogError("Failed to load Enemy System!"),
+                this
+            );
+        }
 
         private void LogLevelStartedEvent()
         {
@@ -80,6 +104,12 @@ namespace ProjectCore.GamePlay
                 Addressables.ReleaseInstance(_playerHandle);
             }
             _playerInstance = null;
+            
+            if (_asteroidSpawnerHandle.IsValid())
+            {
+                Addressables.ReleaseInstance(_asteroidSpawnerHandle);
+            }
+            _asteroidSpawnerInstance = null;
         }
     }
 }

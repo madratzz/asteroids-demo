@@ -20,6 +20,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a541e48d71d65b469d87e2ee73d9c12
+    m_Address: AsteroidSpawner
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f5036ac649cf65449def4f1dfde72c2
+    m_Address: Asteroid_Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77a3f19a04dab0c49960049bcde72127
     m_Address: Player_Default
     m_ReadOnly: 0

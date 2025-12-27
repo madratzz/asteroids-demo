@@ -4,9 +4,12 @@ using ProjectCore.Events;
 using ProjectCore.StateMachine;
 using ProjectCore.Utilities;
 using ProjectCore.Variables;
+using ProjectGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using VContainer;
+using VContainer.Unity;
 
 namespace ProjectCore
 {
@@ -61,7 +64,10 @@ namespace ProjectCore
                 (controller, handle) =>
                 {
                     _flowControllerInstance = controller
-                        .GetComponent<ApplicationFlowController>(); 
+                        .GetComponent<ApplicationFlowController>();
+                    
+                    var container = LifetimeScope.Find<RootLifetimeScope>().Container;
+                    container.InjectGameObject(controller);
                 }
             );
         }
@@ -72,7 +78,8 @@ namespace ProjectCore
             yield return new WaitForSeconds(SplashDelay);
 
             _sceneLoadingOperation = SceneManager.LoadSceneAsync(SceneIndex, LoadSceneMode.Additive);
-            _sceneLoadingOperation.allowSceneActivation = false; // Hold until we say go
+            if (_sceneLoadingOperation != null)
+                _sceneLoadingOperation.allowSceneActivation = false; // Hold until we say go
         }
 
         public override IEnumerator Tick()

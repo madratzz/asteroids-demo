@@ -4,6 +4,8 @@ using UnityEngine;
 using ProjectCore.Events;
 using ProjectCore.StateMachine;
 using ProjectCore.UI;
+using ProjectGame.Core.Interfaces;
+using VContainer;
 
 namespace ProjectCore
 {
@@ -25,7 +27,7 @@ namespace ProjectCore
         [SerializeField] private GameEventWithInt LevelFailViewClosed;
         
         // Internal Systems
-        private ApplicationFlowLogic _logicBrain;
+        private IFlowLogic _logicBrain;
         private Dictionary<FlowIntent, Action> _commandMap;
         private Camera _mainCamera;
 
@@ -33,10 +35,15 @@ namespace ProjectCore
         // INITIALIZATION
         // ---------------------------------------------------------
         
+        [Inject]
+        public void Construct(IFlowLogic logicBrain)
+        {
+            _logicBrain = logicBrain;
+        }
+        
         private void Awake()
         {
             _mainCamera = Camera.main;
-            _logicBrain = new ApplicationFlowLogic();
             
             InitializeCommands();
             SubscribeEvents();

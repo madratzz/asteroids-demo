@@ -1,11 +1,12 @@
 using NUnit.Framework;
 using ProjectCore.UI;
+using ProjectGame.Core.Interfaces;
 
 namespace ProjectCore.Tests
 {
     public class ApplicationFlowTests
     {
-        private ApplicationFlowLogic _logic;
+        private IFlowLogic _logic;
 
         [SetUp]
         public void SetUp()

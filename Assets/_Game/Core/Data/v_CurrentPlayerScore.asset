@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13bdd57075f014868a05e8ffe88af67a, type: 3}
+  m_Script: {fileID: 11500000, guid: a406f3e11b3c4d5c897eca8c84d0862d, type: 3}
   m_Name: v_CurrentPlayerScore
   m_EditorClassIdentifier: madratzz.scriptableobjectvariables.runtime::ProjectCore.Variables.Int
   Value: 0
   DefaultValue: 0
   ResetToDefaultOnPlay: 1
+  ValueChanged: {fileID: 11400000, guid: 1f37f057405979c44a747d315fc08ee5, type: 2}

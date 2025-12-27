@@ -13,18 +13,15 @@ namespace ProjectCore
         [SerializeField] private FiniteStateMachine StateMachine;
         
         [Header("Transitions (The Destinations)")]
-        [SerializeField] private Transition MainMenuTransition;
         [SerializeField] private Transition GameStateTransition;
         [SerializeField] private Transition LevelFailTransition;
         [SerializeField] private Transition SettingsTransition;
 
         [Header("Events (The Triggers)")]
-        [SerializeField] private GameEvent GotoMainMenu;
         [SerializeField] private GameEvent GotoGame;
         [SerializeField] private GameEvent GotoLevelFail;
         
         [Header("View Closed Events")]
-        [SerializeField] private GameEventWithInt MainMenuViewClosed;
         [SerializeField] private GameEventWithInt LevelFailViewClosed;
         
         // Internal Systems
@@ -53,7 +50,7 @@ namespace ProjectCore
         public void Boot()
         {
             Debug.Log("[Flow] Booting Application...");
-            ExecuteIntent(FlowIntent.GoToMainMenu);
+            ExecuteIntent(FlowIntent.GoToGame);
         }
 
         
@@ -63,7 +60,6 @@ namespace ProjectCore
             _commandMap = new Dictionary<FlowIntent, Action>
             {
                 // 1. Map Intents to specific Transitions (Explicit Binding)
-                { FlowIntent.GoToMainMenu,      () => PerformTransition(MainMenuTransition) },
                 { FlowIntent.GoToGame,          () => PerformTransition(GameStateTransition) },
                 { FlowIntent.GoToLevelFail,     () => PerformTransition(LevelFailTransition) },
 
@@ -71,7 +67,7 @@ namespace ProjectCore
                 { FlowIntent.ResumePrevious,    () => StateMachine.ShouldResumePreviousState() },
                 
                 // 3. Defaults
-                { FlowIntent.DefaultToMainMenu, () => PerformTransition(MainMenuTransition) }
+                { FlowIntent.DefaultToGame, () => PerformTransition(GameStateTransition) }
             };
         }
 
@@ -94,7 +90,7 @@ namespace ProjectCore
             else
             {
                 Debug.LogError($"[Flow] Missing binding for Intent: {intent}. Using Fallback.");
-                _commandMap[FlowIntent.DefaultToMainMenu]?.Invoke();
+                _commandMap[FlowIntent.DefaultToGame]?.Invoke();
             }
         }
 
@@ -121,30 +117,24 @@ namespace ProjectCore
         // ---------------------------------------------------------
 
         private void OnGotoGame() => ExecuteIntent(FlowIntent.GoToGame);
-        private void OnGotoMainMenu() => ExecuteIntent(FlowIntent.GoToMainMenu);
         private void OnGotoLevelFail() => ExecuteIntent(FlowIntent.GoToLevelFail);
-
-        private void OnMainMenuClose(int value) => ResolveDecision(FlowContext.MainMenu, (UICloseReasons)value);
+        
         private void OnLevelFailViewClose(int value) => ResolveDecision(FlowContext.LevelFail, (UICloseReasons)value);
         
 
         private void SubscribeEvents()
         {
             if (GotoGame) GotoGame.Handler += OnGotoGame;
-            if (GotoMainMenu) GotoMainMenu.Handler += OnGotoMainMenu;
             if (GotoLevelFail) GotoLevelFail.Handler += OnGotoLevelFail;
             
-            if (MainMenuViewClosed) MainMenuViewClosed.Handler += OnMainMenuClose;
             if (LevelFailViewClosed) LevelFailViewClosed.Handler += OnLevelFailViewClose;
         }
 
         private void UnsubscribeEvents()
         {
             if (GotoGame) GotoGame.Handler -= OnGotoGame;
-            if (GotoMainMenu) GotoMainMenu.Handler -= OnGotoMainMenu;
             if (GotoLevelFail) GotoLevelFail.Handler -= OnGotoLevelFail;
             
-            if (MainMenuViewClosed) MainMenuViewClosed.Handler -= OnMainMenuClose;
             if (LevelFailViewClosed) LevelFailViewClosed.Handler -= OnLevelFailViewClose;
         }
     }

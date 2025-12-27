@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2eecc7b73716e4a56a37763ce278df6d, type: 3}
-  m_Name: e_MainMenuViewClose
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 9f2f003bdd980410b90f8490c3531181, type: 3}
+  m_Name: e_PlayerScoreValueChanged
+  m_EditorClassIdentifier: madratzz.scriptableobjecteventsystem.runtime::ProjectCore.Events.GameEvent

@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dc157bf5e9edf34ba2f787d8aa44061, type: 3}
   m_Name: LevelFailViewState
   m_EditorClassIdentifier: 
-  PausesPreviousState: 0
+  PausesPreviousState: 1
   ViewReference:
     m_AssetGUID: eb85561551153ac48997de848f54b5f5
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  EventWithCloseReason: {fileID: 11400000, guid: ec35e758e6c2f9a42a6a56dd90cf8a14,
-    type: 2}
+  EventWithCloseReason: {fileID: 11400000, guid: ec35e758e6c2f9a42a6a56dd90cf8a14, type: 2}

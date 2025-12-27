@@ -43,3 +43,5 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   CurrentPlayerScore: {fileID: 11400000, guid: e0e9ecdd98ec3974087dfb2ae4fc1f25, type: 2}
+  PlayerLives: {fileID: 11400000, guid: 5e484b0cb06896149875576ddccb6e0a, type: 2}
+  GotoLevelFail: {fileID: 11400000, guid: 85eca93865a6f324285ad513bc47253f, type: 2}

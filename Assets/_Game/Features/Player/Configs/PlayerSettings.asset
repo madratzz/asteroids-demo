@@ -15,6 +15,6 @@ MonoBehaviour:
   ThrustForce: 10
   RotationSpeed: 180
   DragFactor: 1
-  FireRate: 0.25
+  FireRate: 0.2
   BulletSpeed: 20
   BulletLifetime: 0.5

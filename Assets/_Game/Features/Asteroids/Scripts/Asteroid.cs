@@ -23,6 +23,8 @@ namespace ProjectGame.Features.Enemies
         private Action<Asteroid> _returnToPool;
         private Action<AsteroidSize, Vector3> _splitAction;
 
+        private const string PlayerTag = "Player";
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
@@ -45,15 +47,25 @@ namespace ProjectGame.Features.Enemies
             float randomAngle = Random.Range(0f, 360f);
             transform.rotation = Quaternion.Euler(0, 0, randomAngle);
 
-            // Randomize Direction (Any random direction)
+            // Randomize Direction
             Vector2 randomDir = Random.insideUnitCircle.normalized;
             
             // Small asteroids move faster than large ones
             float speedMultiplier = (Size == AsteroidSize.Small) ? 1.5f : 1.0f;
             
-            // Physics
+            
             _rb.linearVelocity = randomDir * (speed * speedMultiplier);
             _rb.angularVelocity = Random.Range(-50f, 50f); // Spin
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.attachedRigidbody.TryGetComponent(out IDamageable damageable)) return;
+           
+            if (!other.CompareTag(PlayerTag)) return;
+            
+            damageable.TakeDamage(1); 
+            Die();
         }
         
         public void TakeDamage(int amount)

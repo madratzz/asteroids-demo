@@ -16,13 +16,8 @@ namespace ProjectCore
 
         private void InitializeStrategies()
         {
-            // --- MAIN MENU CONTEXT ---
-            Add(FlowContext.MainMenu, UICloseReasons.Game,     FlowIntent.GoToGame);
-
             // --- LEVEL FAIL CONTEXT ---
-            Add(FlowContext.LevelFail, UICloseReasons.Home,      FlowIntent.GoToMainMenu);
             Add(FlowContext.LevelFail, UICloseReasons.Game,      FlowIntent.GoToGame);
-            Add(FlowContext.LevelFail, UICloseReasons.Revive,    FlowIntent.ResumePrevious);
         }
 
         // Helper to keep the dictionary cleaner
@@ -36,7 +31,7 @@ namespace ProjectCore
         /// </summary>
         public FlowIntent GetDecision(FlowContext context, UICloseReasons reason)
         {
-            return _strategies.GetValueOrDefault((context, reason), FlowIntent.DefaultToMainMenu);
+            return _strategies.GetValueOrDefault((context, reason), FlowIntent.DefaultToGame);
         }
     }
     
@@ -44,10 +39,10 @@ namespace ProjectCore
     public enum FlowIntent
     {
         None = 0,               // Default/Uninitialized catch
-        DefaultToMainMenu = 1,  // Fallback
+        DefaultToGame = 1,  // Fallback
     
         // Navigation (100 range)
-        GoToMainMenu   = 100,
+        //GoToMainMenu   = 100,
         GoToGame       = 101,
         GoToLevelFail  = 102,
     
@@ -59,7 +54,7 @@ namespace ProjectCore
     public enum FlowContext
     {
         None      = 0,
-        MainMenu  = 1,
+        //MainMenu  = 1,
         LevelFail = 2
     }
 }

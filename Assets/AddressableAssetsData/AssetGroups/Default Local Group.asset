@@ -21,7 +21,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 20e840c050b8e3249bdaa0540987d7b2
-    m_Address: Assets/ProjectGame/GamePlay/Addressables/LevelObject.prefab
+    m_Address: LevelObject
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ccd74cffa2db7b4ba67d8db494ff03a
-    m_Address: Bullet_Default
+    m_Address: Projectile_Default
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -67,11 +67,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb85561551153ac48997de848f54b5f5
     m_Address: Assets/ProjectGame/LevelFailView/Prefabs/Addressables/LevelFailView.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f22b36b6037d5b04f8807acc101f6786
-    m_Address: Assets/ProjectGame/MainMenuView/Prefabs/Addressables/MainMenuView.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

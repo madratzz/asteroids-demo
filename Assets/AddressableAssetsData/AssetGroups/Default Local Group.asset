@@ -21,7 +21,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 20e840c050b8e3249bdaa0540987d7b2
-    m_Address: Assets/ProjectGame/GamePlay/Addressables/LevelObject.prefab
+    m_Address: LevelObject
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ccd74cffa2db7b4ba67d8db494ff03a
-    m_Address: Bullet_Default
+    m_Address: Projectile_Default
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

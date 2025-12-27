@@ -1,4 +1,5 @@
 using System.Collections;
+using ProjectCore.Events;
 using ProjectCore.Utilities;
 using ProjectCore.Variables;
 using UnityEngine;
@@ -20,6 +21,9 @@ namespace ProjectCore.GamePlay
         
         [Header("Game State Data")]
         [SerializeField] private Int CurrentPlayerScore;
+        [SerializeField] private Int PlayerLives;
+        
+        [SerializeField] private GameEvent GotoLevelFail;
         
         private AsyncOperationHandle<GameObject> _playerHandle;
         private GameObject _playerInstance;
@@ -42,6 +46,16 @@ namespace ProjectCore.GamePlay
             //Start the Game Flow
             GameStateStart.Invoke();
             LogLevelStartedEvent();
+        }
+
+        public override IEnumerator Tick()
+        {
+            yield return base.Tick();
+
+            if (PlayerLives<=0)
+            {
+                GotoLevelFail.Invoke();
+            }
         }
 
         private IEnumerator InstantiateLevelObject()

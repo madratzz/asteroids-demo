@@ -45,15 +45,10 @@ namespace ProjectGame.Features.Weapons
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // TODO: Add damage logic here later (IDamageable)
+            if (!other.attachedRigidbody.TryGetComponent<IDamageable>(out var damageable)) return;
             
-            // For now, just disappear if we hit something that isn't the player
-            // (We will add Layer checks later to prevent shooting yourself)
-            if (other.TryGetComponent<IDamageable>(out var damageable))
-            {
-                damageable.TakeDamage(1);
-                Release();
-            }
+            damageable.TakeDamage(1);
+            Release();
         }
 
         private void Release()

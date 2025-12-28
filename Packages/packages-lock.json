@@ -70,7 +70,7 @@
       }
     },
     "com.madratzz.utilities.extensions": {
-      "version": "file:../ThirdPartyPackages/com.madratzz.utilities.extensions-0.0.3.tgz",
+      "version": "file:../ThirdPartyPackages/com.madratzz.utilities.extensions-0.0.5.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {

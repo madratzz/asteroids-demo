@@ -51,7 +51,7 @@ namespace ProjectGame.Core.Pooling
 
         private void CreateContainer()
         {
-            var obj = new GameObject($"--- Pool: {PrefabReference.editorAsset.name} ---");
+            var obj = new GameObject($"--- Pool: {PrefabReference.Asset.name} ---");
             _container = obj.transform;
         }
 

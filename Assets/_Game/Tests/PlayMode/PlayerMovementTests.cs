@@ -90,8 +90,9 @@ namespace ProjectGame.Tests.PlayMode
         public IEnumerator Player_Should_Rotate_Left_When_Input_Is_Negative()
         {
             // Arrange
-            _mockInput.RotationInput = -1f; // "Left" or "A" key usually rotates CCW (Positive Z)
+            _mockInput.RotationInput = -1f; 
             float startRotation = _rb.rotation;
+            
 
             // Act
             // Rotate for 1 second implies 90 degrees change based on our settings

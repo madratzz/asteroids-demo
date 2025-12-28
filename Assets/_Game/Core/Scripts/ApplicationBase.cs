@@ -3,6 +3,8 @@ using ProjectCore.Events;
 using ProjectCore.StateMachine;
 using ProjectCore.Variables;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace ProjectCore
 {
@@ -11,21 +13,27 @@ namespace ProjectCore
         [SerializeField] private int IOSTargetFrameRate = 60;
         [SerializeField] private int AndroidTargetFrameRate = 60;
 
-        [SerializeField] private FiniteStateMachine ApplicationStateMachine;
+        // [SerializeField] private FiniteStateMachine ApplicationStateMachine;
         [SerializeField] private TimeMachine.TimeMachine ApplicationTimeMachine;
 
         [SerializeField] private GameEvent AppPaused;
         [SerializeField] private GameEvent AppResumed;
         [SerializeField] private DBInt AppPausedTime;
-
-
+        
+        private FiniteStateMachine _applicationStateMachine;
         private Coroutine _stateMachineRoutine;
         private Coroutine _timeMachineRoutine;
         private bool _appPaused = false;
-
+        
+        [Inject]
+        public void Construct(FiniteStateMachine stateMachine)
+        {
+            _applicationStateMachine = stateMachine;
+        }
+        
         #region Life Cycle
 
-        // Start is called before the first frame update
+
         private void Start()
         {
             Application.targetFrameRate = Application.platform switch
@@ -37,8 +45,11 @@ namespace ProjectCore
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-            _timeMachineRoutine = StartCoroutine(ApplicationTimeMachine.Tick());
-            _stateMachineRoutine = StartCoroutine(ApplicationStateMachine.Tick());
+            if (ApplicationTimeMachine != null) 
+                _timeMachineRoutine = StartCoroutine(ApplicationTimeMachine.Tick());
+            
+            if (_applicationStateMachine != null)
+                _stateMachineRoutine = StartCoroutine(_applicationStateMachine.Tick());
             
             // Initialize Firebase and Ads Here
         }

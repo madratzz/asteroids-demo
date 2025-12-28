@@ -14,20 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PausesPreviousState: 0
   ApplicationFlowControllerReference:
-    m_AssetGUID: 8ca9f5a9d2a3a0a42b9e3a268aa6aa39
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
-  UINavigationManagerReference:
-    m_AssetGUID: 9b913f3c09d0eb74a8b0c5fbb02d0cef
+    m_AssetGUID: c001f21d63332be40b9d95361911c495
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   SceneIndex: 1
   TimeoutDuration: 3
-  SceneLoadingProgress: {fileID: 11400000, guid: a38cce26c2c993b4bbf6353f738cbbbe,
-    type: 2}
-  SdkLoadingProgress: {fileID: 11400000, guid: f5beaee28cd4dc042a860ef100216d06, type: 2}
+  SceneLoadingProgress: {fileID: 11400000, guid: a38cce26c2c993b4bbf6353f738cbbbe, type: 2}
   HideLoadingView: {fileID: 11400000, guid: cf2fd7f997a464245929826363d0562c, type: 2}

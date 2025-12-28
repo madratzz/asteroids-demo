@@ -4,11 +4,9 @@ using ProjectCore.Events;
 using ProjectCore.StateMachine;
 using ProjectCore.Utilities;
 using ProjectCore.Variables;
-using ProjectGame.Core.Interfaces;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
-using VContainer;
 using VContainer.Unity;
 
 namespace ProjectCore
@@ -43,21 +41,21 @@ namespace ProjectCore
         public override IEnumerator Execute()
         {
             yield return base.Execute();
-            
             yield return InstantiateApplicationFlowController();
             
-            
-            if (_flowControllerInstance == null)
-            {
-                Debug.LogError("[SplashState] Critical: Core systems failed to load.");
-                yield break; 
-            }
-
             //Start Loading the Game Scene
-            yield return GameSceneLoading();
+            yield return LoadGameScene();
+        }
+        
+        public override IEnumerator Tick()
+        {
+            yield return base.Tick();
+            yield return WaitForSceneLoadAndTimeout();
+            yield return FinalizeSceneActivation();
+            CompleteBootSequence();
         }
 
-        private object InstantiateApplicationFlowController()
+        private IEnumerator InstantiateApplicationFlowController()
         {
             return AddressablesHelper.InstantiateGameObject(
                 ApplicationFlowControllerReference,
@@ -66,13 +64,16 @@ namespace ProjectCore
                     _flowControllerInstance = controller
                         .GetComponent<ApplicationFlowController>();
                     
+                    if (_flowControllerInstance == null)
+                        Debug.LogError("[SplashState] Critical: Core systems failed to load.");
+                    
                     var container = LifetimeScope.Find<RootLifetimeScope>().Container;
-                    container.InjectGameObject(controller);
+                    container.InjectGameObject(controller); //Inject the Flow Controller via VContainer
                 }
             );
         }
 
-        private IEnumerator GameSceneLoading()
+        private IEnumerator LoadGameScene()
         {
             // Artificial delay want the splash to linger
             yield return new WaitForSeconds(SplashDelay);
@@ -81,57 +82,47 @@ namespace ProjectCore
             if (_sceneLoadingOperation != null)
                 _sceneLoadingOperation.allowSceneActivation = false; // Hold until we say go
         }
-
-        public override IEnumerator Tick()
+        
+        private IEnumerator WaitForSceneLoadAndTimeout()
         {
-            yield return base.Tick();
-
-            //Monitor Scene Loading
-            if (_sceneLoadingOperation != null)
-            {
-                // Scene loads to 0.9 then waits for activation
-                SceneLoadingProgress.SetValue(_sceneLoadingOperation.progress / 0.9f);
-            }
-
-            //Wait for Scene Ready + SDKs + Minimum Time
             float timeStarted = Time.time;
 
-            while (true)
+            while (_sceneLoadingOperation != null)
             {
-                bool isTimeOut = (Time.time - timeStarted) > TimeoutDuration;
-                bool isSceneReady = _sceneLoadingOperation != null && _sceneLoadingOperation.progress >= 0.9f;
+                // Update Progress (normalized 0 to 1 based on the 0.9 cap)
+                float progress = Mathf.Clamp01(_sceneLoadingOperation.progress / 0.9f);
+                SceneLoadingProgress.SetValue(progress);
 
-                // Exit condition: Timeout (maximum wait) OR Scene ready
-                if (isTimeOut || isSceneReady)
-                {
-                    break;
-                }
+                bool isTimeOut = (Time.time - timeStarted) > TimeoutDuration;
+                bool isSceneReady = _sceneLoadingOperation.progress >= 0.9f;
+
+                if (isTimeOut || isSceneReady) break;
 
                 yield return null;
             }
+        }
 
+        private IEnumerator FinalizeSceneActivation()
+        {
             SceneLoadingProgress.SetValue(1.0f);
 
-            //Activate Scene
-            if (_sceneLoadingOperation != null)
+            if (_sceneLoadingOperation == null) yield break;
+
+            // Allow the actual scene swap
+            _sceneLoadingOperation.allowSceneActivation = true;
+            yield return new WaitUntil(() => _sceneLoadingOperation.isDone);
+
+            Scene loadedScene = SceneManager.GetSceneByBuildIndex(SceneIndex);
+            if (loadedScene.IsValid())
             {
-                _sceneLoadingOperation.allowSceneActivation = true;
-                yield return new WaitUntil(() => _sceneLoadingOperation.isDone);
-
-                Scene scene = SceneManager.GetSceneByBuildIndex(SceneIndex);
-                if (scene.IsValid())
-                {
-                    SceneManager.SetActiveScene(scene);
-                }
+                SceneManager.SetActiveScene(loadedScene);
             }
+        }
 
-            //Cleanup & Boot
+        private void CompleteBootSequence()
+        {
             HideLoadingView.Invoke();
-
-            if (_flowControllerInstance != null)
-            {
-                _flowControllerInstance.Boot();
-            }
+            _flowControllerInstance?.Boot();
         }
     }
 }

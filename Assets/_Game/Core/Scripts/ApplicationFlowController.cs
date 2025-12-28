@@ -11,9 +11,6 @@ namespace ProjectCore
 {
     public class ApplicationFlowController : MonoBehaviour
     {
-        [Header("Core Dependencies")]
-        [SerializeField] private FiniteStateMachine StateMachine;
-        
         [Header("Transitions (The Destinations)")]
         [SerializeField] private Transition GameStateTransition;
         [SerializeField] private Transition LevelFailTransition;
@@ -27,6 +24,7 @@ namespace ProjectCore
         [SerializeField] private GameEventWithInt LevelFailViewClosed;
         
         // Internal Systems
+        private FiniteStateMachine _stateMachine;
         private IFlowLogic _logicBrain;
         private Dictionary<FlowIntent, Action> _commandMap;
         private Camera _mainCamera;
@@ -36,9 +34,10 @@ namespace ProjectCore
         // ---------------------------------------------------------
         
         [Inject]
-        public void Construct(IFlowLogic logicBrain)
+        public void Construct(IFlowLogic logicBrain, FiniteStateMachine stateMachine)
         {
             _logicBrain = logicBrain;
+            _stateMachine = stateMachine;
         }
         
         private void Awake()
@@ -57,7 +56,8 @@ namespace ProjectCore
         public void Boot()
         {
             Debug.Log("[Flow] Booting Application...");
-            ExecuteIntent(FlowIntent.GoToGame);
+            // ExecuteIntent(FlowIntent.GoToGame);
+            ResolveDecision(FlowContext.Boot, UICloseReasons.Game);
         }
 
         
@@ -71,7 +71,7 @@ namespace ProjectCore
                 { FlowIntent.GoToLevelFail,     () => PerformTransition(LevelFailTransition) },
 
                 // 2. Map Intents to Logic
-                { FlowIntent.ResumePrevious,    () => StateMachine.ShouldResumePreviousState() },
+                { FlowIntent.ResumePrevious,    () => _stateMachine.ShouldResumePreviousState() },
                 
                 // 3. Defaults
                 { FlowIntent.DefaultToGame, () => PerformTransition(GameStateTransition) }
@@ -116,7 +116,7 @@ namespace ProjectCore
                 viewTransition.Camera = _mainCamera;
             }
 
-            StateMachine.Transition(transition);
+            _stateMachine.Transition(transition);
         }
 
         // ---------------------------------------------------------

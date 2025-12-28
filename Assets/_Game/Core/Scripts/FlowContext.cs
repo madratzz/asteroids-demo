@@ -3,7 +3,8 @@
     public enum FlowContext
     {
         None      = 0,
-        //MainMenu  = 1,
-        LevelFail = 2
+        Boot      = 1,
+        //MainMenu  = 2,
+        LevelFail = 3
     }
 }

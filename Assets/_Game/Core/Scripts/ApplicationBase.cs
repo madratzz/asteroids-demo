@@ -37,8 +37,11 @@ namespace ProjectCore
 
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-            _timeMachineRoutine = StartCoroutine(ApplicationTimeMachine.Tick());
-            _stateMachineRoutine = StartCoroutine(ApplicationStateMachine.Tick());
+            if (ApplicationTimeMachine != null) 
+                _timeMachineRoutine = StartCoroutine(ApplicationTimeMachine.Tick());
+            
+            if (_applicationStateMachine != null)
+                _stateMachineRoutine = StartCoroutine(_applicationStateMachine.Tick());
             
             // Initialize Firebase and Ads Here
         }

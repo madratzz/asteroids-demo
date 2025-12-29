@@ -45,10 +45,7 @@ namespace ProjectGame.Features.Waves
         
         private void OnEnable()
         {
-            // Reset logic when Game State starts
-            //_waveLogic.Reset();
             _activeAsteroidCount = 0;
-            StartNextWave();
         }
         
         private void Awake()

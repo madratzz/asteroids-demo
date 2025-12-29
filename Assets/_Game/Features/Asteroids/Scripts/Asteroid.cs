@@ -13,12 +13,12 @@ namespace ProjectGame.Features.Enemies
     {
         [Header("Config")]
         [SerializeField] private AsteroidSize Size;
-        [SerializeField] private int ScoreValue = 100;
         
         [Header("Architecture Dependencies")]
         [SerializeField] private Int CurrentPlayerScore; 
         [SerializeField] private GameEvent EnemyDestroyed;
         
+        private int _asteroidScoreValue;
         private Rigidbody2D _rb;
         private Action<Asteroid> _returnToPool;
         private Action<AsteroidSize, Vector3> _splitAction;
@@ -35,27 +35,40 @@ namespace ProjectGame.Features.Enemies
             _rb.angularDamping = 0;
         }
         
-        public void Initialize(Vector2 position, float speed, Action<Asteroid> returnAction, 
-            Action<AsteroidSize, Vector3> splitAction)
+        public void Initialize(Vector2 position, AsteroidSize size, 
+            AsteroidSettingsSO settings, Action<Asteroid> returnAction, 
+            Action<AsteroidSize, Vector3> splitAction )
         {
+            Size = size;
+            _asteroidScoreValue = settings.GetScore(size);
             _returnToPool = returnAction;
             _splitAction = splitAction;
-            
             transform.position = position;
 
-            // Randomize Rotation
-            float randomAngle = Random.Range(0f, 360f);
-            transform.rotation = Quaternion.Euler(0, 0, randomAngle);
+            RandomizeAsteroidRotation();
+            float speedMultiplier = CalculateSpeedMultiplier(settings);
+            SetRandomMovement(settings, speedMultiplier);
+        }
+        
+        public void TakeDamage(int amount)
+        {
+            Die();
+        }
 
-            // Randomize Direction
-            Vector2 randomDir = Random.insideUnitCircle.normalized;
+        private void Die()
+        {
+            if (CurrentPlayerScore != null) CurrentPlayerScore.ApplyChange(_asteroidScoreValue);
+            if (EnemyDestroyed != null) EnemyDestroyed.Invoke();
             
-            // Small asteroids move faster than large ones
-            float speedMultiplier = (Size == AsteroidSize.Small) ? 1.5f : 1.0f;
-            
-            
-            _rb.linearVelocity = randomDir * (speed * speedMultiplier);
-            _rb.angularVelocity = Random.Range(-50f, 50f); // Spin
+            _splitAction?.Invoke(Size, transform.position);
+            Release();
+        }
+
+        public void Release()
+        {
+            _rb.linearVelocity = Vector2.zero;
+            _rb.angularVelocity = 0;
+            _returnToPool?.Invoke(this);
         }
         
         private void OnTriggerEnter2D(Collider2D other)
@@ -68,26 +81,29 @@ namespace ProjectGame.Features.Enemies
             Die();
         }
         
-        public void TakeDamage(int amount)
+        
+        private float CalculateSpeedMultiplier(AsteroidSettingsSO settings)
         {
-            Die();
+            // Small asteroids move faster than large ones
+            float speedMultiplier = (Size == AsteroidSize.Small) 
+                ? settings.SmallSpeedMultiplier 
+                : settings.NormalSpeedMultiplier;
+            return speedMultiplier;
         }
 
-        private void Die()
+        private void RandomizeAsteroidRotation()
         {
-            if (CurrentPlayerScore != null) CurrentPlayerScore.ApplyChange(ScoreValue);
-            if (EnemyDestroyed != null) EnemyDestroyed.Invoke();
-            
-            _splitAction?.Invoke(Size, transform.position);
-            
-            Release();
+            // Randomize Rotation
+            float randomAngle = Random.Range(0f, 360f);
+            transform.rotation = Quaternion.Euler(0, 0, randomAngle);
         }
 
-        public void Release()
+        private void SetRandomMovement(AsteroidSettingsSO settings, float speedMultiplier)
         {
-            _rb.linearVelocity = Vector2.zero;
-            _rb.angularVelocity = 0;
-            _returnToPool?.Invoke(this);
+            // Randomize Direction
+            Vector2 randomDir = Random.insideUnitCircle.normalized;
+            _rb.linearVelocity = randomDir * (settings.BaseSpeed * speedMultiplier);
+            _rb.angularVelocity = Random.Range(settings.MinSpin, settings.MaxSpin); // Spin
         }
     }
 }

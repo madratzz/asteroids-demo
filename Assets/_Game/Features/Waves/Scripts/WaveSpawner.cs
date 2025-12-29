@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CustomUtilities.Attributes;
 using ProjectGame.Core.Pooling;
 using ProjectGame.Features.Enemies;
@@ -150,6 +150,26 @@ namespace ProjectGame.Features.Waves
                 if (!pool.IsReady) return false;
             }
             return true;
+        }
+        
+        [Button]
+        public void DebugKillAll()
+        {
+            // 1. Find all ACTIVE asteroids in the scene
+            // (FindObjectsByType only finds active objects by default)
+            var allAsteroids = FindObjectsByType<Asteroid>(FindObjectsSortMode.None);
+
+            foreach (var asteroid in allAsteroids)
+            {
+                // 2. Send them back to the pool immediately.
+                // We call Release() instead of Die() to avoid spawning split pieces or adding score.
+                asteroid.Release();
+            }
+
+            // 3. Force the logic to recognize the wave is cleared
+            _activeAsteroidCount = 0;
+    
+            Debug.Log($"[DEBUG] Removed {allAsteroids.Length} asteroids. Next wave starting...");
         }
         
         [System.Serializable]

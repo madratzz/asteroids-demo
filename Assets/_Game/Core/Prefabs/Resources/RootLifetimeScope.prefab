@@ -49,3 +49,5 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   ApplicationStateMachine: {fileID: 11400000, guid: 58f4e99c3c187cb47a256740a8c6464f, type: 2}
+  WaveSettings: {fileID: 11400000, guid: 08636a21b4ff58440ab963697c80d476, type: 2}
+  AsteroidSettings: {fileID: 11400000, guid: 3f503be33b639f842ba8d5eb2ac7fa70, type: 2}

@@ -2,11 +2,11 @@
 
 namespace ProjectGame.Features.Enemies.Logic
 {
-    public class AsteroidSpawnerLogic
+    public class WaveSpawnerLogic
     {
         private float _nextSpawnTime;
 
-        // 1. Timer Logic
+        // Timer Logic
         public bool ShouldSpawn(float currentTime, float spawnRate)
         {
             if (currentTime >= _nextSpawnTime)
@@ -17,7 +17,7 @@ namespace ProjectGame.Features.Enemies.Logic
             return false;
         }
 
-        // 2. Position Logic
+        // Position Logic
         // Calculates a random point OUTSIDE the screen bounds so asteroids drift in naturally
         public Vector2 GetRandomSpawnPosition(float camHeight, float camWidth, float buffer = 1.0f)
         {

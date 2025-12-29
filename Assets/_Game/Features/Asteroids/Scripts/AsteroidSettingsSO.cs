@@ -7,16 +7,22 @@ namespace ProjectGame.Features.Enemies
     [CreateAssetMenu(fileName = "AsteroidSettings", menuName = "ProjectGame/Configs/Asteroid Settings")]
     public class AsteroidSettingsSO : ScriptableObject
     {
-        [Header("Movement")] public float BaseSpeed = 1.0f;
+        [Header("Movement")] 
+        public float BaseSpeed = 1.0f;
         public float SmallSpeedMultiplier = 1.5f;
         public float NormalSpeedMultiplier = 1.0f;
 
-        [Header("Physics")] public float MinSpin = -50f;
+        [Header("Physics")] 
+        public float MinSpin = -50f;
         public float MaxSpin = 50f;
 
-        [Header("Scoring")] public int ScoreLarge = 50;
+        [Header("Scoring")] 
+        public int ScoreLarge = 50;
         public int ScoreMedium = 100;
         public int ScoreSmall = 200;
+        
+        [Header("Combat")] 
+        public int LivesDamage = 1;
 
         [Header("Split Logic")] [SerializeField]
         private List<SplitRule> SplitRules;

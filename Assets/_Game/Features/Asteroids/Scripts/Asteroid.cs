@@ -19,6 +19,8 @@ namespace ProjectGame.Features.Enemies
         [SerializeField] private GameEvent EnemyDestroyed;
         
         private int _asteroidScoreValue;
+        private int _damageValue;
+        
         private Rigidbody2D _rb;
         private Action<Asteroid> _returnToPool;
         private Action<AsteroidSize, Vector3> _splitAction;
@@ -41,6 +43,7 @@ namespace ProjectGame.Features.Enemies
         {
             Size = size;
             _asteroidScoreValue = settings.GetScore(size);
+            _damageValue = settings.LivesDamage;
             _returnToPool = returnAction;
             _splitAction = splitAction;
             transform.position = position;
@@ -77,7 +80,7 @@ namespace ProjectGame.Features.Enemies
            
             if (!other.CompareTag(PlayerTag)) return;
             
-            damageable.TakeDamage(1); 
+            damageable.TakeDamage(_damageValue); 
             Die();
         }
         

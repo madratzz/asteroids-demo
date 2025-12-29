@@ -56,6 +56,7 @@ namespace ProjectGame.Features.Weapons
                 direction: transform.up, 
                 speed: _settings.BulletSpeed, 
                 lifetime: _settings.BulletLifetime,
+                damage: _settings.Damage,
                 returnAction: _pool.Release 
             );
         }

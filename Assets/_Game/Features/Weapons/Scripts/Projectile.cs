@@ -13,6 +13,8 @@ namespace ProjectGame.Features.Weapons
         private readonly ProjectileLogic _logic = new ProjectileLogic();
         
         private Action<Projectile> _returnToPool;
+        
+        private int _damageValue;
 
         private void Awake()
         {
@@ -20,10 +22,11 @@ namespace ProjectGame.Features.Weapons
             _rb.gravityScale = 0; // Ensure no gravity affects the bullet
         }
 
-        public void Initialize(Vector2 direction, float speed, float lifetime, Action<Projectile> returnAction)
+        public void Initialize(Vector2 direction, float speed, float lifetime, int damage, Action<Projectile> returnAction)
         {
             _returnToPool = returnAction;
-
+            _damageValue = damage;
+            
             _logic.Initialize(Time.time, lifetime);
             
             // Reset Physics
@@ -47,7 +50,7 @@ namespace ProjectGame.Features.Weapons
         {
             if (!other.attachedRigidbody.TryGetComponent<IDamageable>(out var damageable)) return;
             
-            damageable.TakeDamage(1);
+            damageable.TakeDamage(_damageValue);
             Release();
         }
 
@@ -55,7 +58,6 @@ namespace ProjectGame.Features.Weapons
         {
             // Prevent "drifting" when respawned next time
             _rb.linearVelocity = Vector2.zero;
-            
             _returnToPool?.Invoke(this); 
         }
     }

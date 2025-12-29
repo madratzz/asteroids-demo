@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using CustomUtilities.Attributes;
 using ProjectGame.Core.Pooling;
 using ProjectGame.Features.Enemies;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace ProjectGame.Features.Waves
         private Dictionary<AsteroidSize, IPool<Asteroid>> _poolMap;
         
         private int _activeAsteroidCount = 0;
+        private float _currentWaveSpeed;
         private bool _isSpawning;
         private Camera _cam;
         private float _camHeight;
@@ -99,6 +101,8 @@ namespace ProjectGame.Features.Waves
             
             int wave = _waveLogic.NextWave();
             int count = _waveLogic.CalculateAsteroidCount(wave);
+            
+            _currentWaveSpeed = _waveLogic.CalculateWaveSpeed(wave, _asteroidSettings.BaseSpeed);
 
             for (int i = 0; i < count; i++)
             {
@@ -113,7 +117,7 @@ namespace ProjectGame.Features.Waves
             if (!_poolMap.TryGetValue(size, out IPool<Asteroid> pool) || !pool.IsReady) return;
             
             Asteroid asteroid = pool.Get();
-            asteroid.Initialize(position, size, _asteroidSettings, pool.Release, HandleSplit);
+            asteroid.Initialize(position, size, _asteroidSettings, _currentWaveSpeed, pool.Release, HandleSplit);
 
             _activeAsteroidCount++;
         }

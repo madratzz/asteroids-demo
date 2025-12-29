@@ -36,7 +36,7 @@ namespace ProjectGame.Features.Enemies
         }
         
         public void Initialize(Vector2 position, AsteroidSize size, 
-            AsteroidSettingsSO settings, Action<Asteroid> returnAction, 
+            AsteroidSettingsSO settings, float baseSpeed, Action<Asteroid> returnAction, 
             Action<AsteroidSize, Vector3> splitAction )
         {
             Size = size;
@@ -47,7 +47,7 @@ namespace ProjectGame.Features.Enemies
 
             RandomizeAsteroidRotation();
             float speedMultiplier = CalculateSpeedMultiplier(settings);
-            SetRandomMovement(settings, speedMultiplier);
+            SetRandomMovement(settings, baseSpeed, speedMultiplier);
         }
         
         public void TakeDamage(int amount)
@@ -98,11 +98,11 @@ namespace ProjectGame.Features.Enemies
             transform.rotation = Quaternion.Euler(0, 0, randomAngle);
         }
 
-        private void SetRandomMovement(AsteroidSettingsSO settings, float speedMultiplier)
+        private void SetRandomMovement(AsteroidSettingsSO settings, float baseSpeed, float speedMultiplier)
         {
             // Randomize Direction
             Vector2 randomDir = Random.insideUnitCircle.normalized;
-            _rb.linearVelocity = randomDir * (settings.BaseSpeed * speedMultiplier);
+            _rb.linearVelocity = randomDir * (baseSpeed * speedMultiplier);
             _rb.angularVelocity = Random.Range(settings.MinSpin, settings.MaxSpin); // Spin
         }
     }

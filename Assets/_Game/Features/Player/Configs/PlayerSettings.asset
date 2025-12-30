@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: Assembly-CSharp::ProjectGame.Features.Player.Configs.PlayerSettingsSO
   ThrustForce: 10
-  RotationSpeed: 180
+  RotationSpeed: 270
   DragFactor: 1
-  FireRate: 0.25
+  FireRate: 0.15
   BulletSpeed: 20
+  BulletLifetime: 1
+  Damage: 1

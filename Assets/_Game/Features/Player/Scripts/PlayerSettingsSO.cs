@@ -13,5 +13,10 @@ namespace ProjectGame.Features.Player.Configs
         [Header("Shooting")]
         public float FireRate = 0.25f;
         public float BulletSpeed = 20f;
+        public float BulletLifetime = 1f;
+        public int Damage = 1; //Not Used but wanted to Extract in SO
+        
+        [Header("Repawn")]
+        public float RespawnDelay = 2f;
     }
 }

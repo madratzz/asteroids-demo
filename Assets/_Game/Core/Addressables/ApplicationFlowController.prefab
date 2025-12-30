@@ -44,22 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e403b77eb2dddc5418ccef120262e85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StateMachine: {fileID: 11400000, guid: 58f4e99c3c187cb47a256740a8c6464f, type: 2}
-  MainMenuTransition: {fileID: 11400000, guid: 1c2808594b8bf824fb87ca8cab0f2a9c, type: 2}
-  GameStateTransition: {fileID: 11400000, guid: 71d7f0aa8842aec4babb62cf76528d4e,
-    type: 2}
-  LevelCompleteTransition: {fileID: 11400000, guid: 8f4f403da4ee71f4596aac1e74831f41,
-    type: 2}
-  LevelFailTransition: {fileID: 11400000, guid: 65ffd4aa38fa34c4eb9fe9c9a30fa4a2,
-    type: 2}
+  FsmReference:
+    m_AssetGUID: 58f4e99c3c187cb47a256740a8c6464f
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  GameStateTransition: {fileID: 11400000, guid: 71d7f0aa8842aec4babb62cf76528d4e, type: 2}
+  LevelFailTransition: {fileID: 11400000, guid: 65ffd4aa38fa34c4eb9fe9c9a30fa4a2, type: 2}
   SettingsTransition: {fileID: 11400000, guid: 16ed733ebf2791c418df4115e36b0efe, type: 2}
-  GotoMainMenu: {fileID: 11400000, guid: 58c9ee66a2e875f4181a216f335c5d27, type: 2}
   GotoGame: {fileID: 11400000, guid: a74d4bbba0bced743b73b4eb35ccff1b, type: 2}
-  GotoLevelComplete: {fileID: 11400000, guid: 415fa0653b279794c8cf8a0968929176, type: 2}
   GotoLevelFail: {fileID: 11400000, guid: 85eca93865a6f324285ad513bc47253f, type: 2}
-  MainMenuViewClosed: {fileID: 11400000, guid: 0f174f0f3d3f86b42bd78cf79b9edae4, type: 2}
-  LevelFailViewClosed: {fileID: 11400000, guid: ec35e758e6c2f9a42a6a56dd90cf8a14,
-    type: 2}
-  LevelCompleteViewClosed: {fileID: 11400000, guid: 985820d6c0d43eb44b56d963e25a2031,
-    type: 2}
-  SettingsViewClosed: {fileID: 0}
+  LevelFailViewClosed: {fileID: 11400000, guid: ec35e758e6c2f9a42a6a56dd90cf8a14, type: 2}

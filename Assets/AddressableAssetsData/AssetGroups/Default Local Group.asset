@@ -13,42 +13,73 @@ MonoBehaviour:
   m_Name: Default Local Group
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
-  m_GUID: a1ae0ae2e5ac377418dc6108b79770ed
+  m_GUID: 33023bfda334d914e99aae0439df702f
   m_SerializeEntries:
-  - m_GUID: 20e840c050b8e3249bdaa0540987d7b2
-    m_Address: Assets/ProjectGame/GamePlay/Addressables/LevelObject.prefab
+  - m_GUID: 1336332f33e4ae84c9474de5ddbc87a9
+    m_Address: Features/Asteroids/Asteroids_S
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Features
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20e840c050b8e3249bdaa0540987d7b2
+    m_Address: Gameplay/Level/LevelObject
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Default
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a541e48d71d65b469d87e2ee73d9c12
+    m_Address: Features/Waves/WaveSpawner
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Features
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f5036ac649cf65449def4f1dfde72c2
+    m_Address: Features/Asteroids/Asteroids_L
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Features
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77a3f19a04dab0c49960049bcde72127
-    m_Address: Player_Default
+    m_Address: Features/Player/Player_Default
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Features
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86ccff9db5df3ab45bba4f31e2147ff9
-    m_Address: Assets/ProjectGame/GameHud/Prefabs/Addressables/NormalGameHud.prefab
+    m_Address: UI/HUD/NormalGameHud
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ca9f5a9d2a3a0a42b9e3a268aa6aa39
-    m_Address: Assets/ProjectCore/Addressables/ApplicationFlowController.prefab
+  - m_GUID: 9ccd74cffa2db7b4ba67d8db494ff03a
+    m_Address: Features/Weapons/Projectile_Default
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Features
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: afa46dc6bf8e8a04f971c99e82191221
-    m_Address: MobileControls_Default
+    m_Address: Features/Input/MobileControlsCanvas.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c001f21d63332be40b9d95361911c495
+    m_Address: Core/ApplicationFlowController
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Core
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c33695d874f884144b08629fb68613e0
+    m_Address: Features/Asteroids/Asteroid_M
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Features
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb85561551153ac48997de848f54b5f5
-    m_Address: Assets/ProjectGame/LevelFailView/Prefabs/Addressables/LevelFailView.prefab
+    m_Address: UI/Views/LevelFailView
     m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f22b36b6037d5b04f8807acc101f6786
-    m_Address: Assets/ProjectGame/MainMenuView/Prefabs/Addressables/MainMenuView.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UI
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 9dfc0fe536e52d44ba56edcf927f3568, type: 2}

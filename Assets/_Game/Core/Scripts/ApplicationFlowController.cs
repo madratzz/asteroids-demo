@@ -4,31 +4,28 @@ using UnityEngine;
 using ProjectCore.Events;
 using ProjectCore.StateMachine;
 using ProjectCore.UI;
+using ProjectGame.Core.Interfaces;
+using VContainer;
 
 namespace ProjectCore
 {
     public class ApplicationFlowController : MonoBehaviour
     {
-        [Header("Core Dependencies")]
-        [SerializeField] private FiniteStateMachine StateMachine;
-        
         [Header("Transitions (The Destinations)")]
-        [SerializeField] private Transition MainMenuTransition;
         [SerializeField] private Transition GameStateTransition;
         [SerializeField] private Transition LevelFailTransition;
         [SerializeField] private Transition SettingsTransition;
 
         [Header("Events (The Triggers)")]
-        [SerializeField] private GameEvent GotoMainMenu;
         [SerializeField] private GameEvent GotoGame;
         [SerializeField] private GameEvent GotoLevelFail;
         
         [Header("View Closed Events")]
-        [SerializeField] private GameEventWithInt MainMenuViewClosed;
         [SerializeField] private GameEventWithInt LevelFailViewClosed;
         
         // Internal Systems
-        private ApplicationFlowLogic _logicBrain;
+        private FiniteStateMachine _stateMachine;
+        private IFlowLogic _logicBrain;
         private Dictionary<FlowIntent, Action> _commandMap;
         private Camera _mainCamera;
 
@@ -36,10 +33,16 @@ namespace ProjectCore
         // INITIALIZATION
         // ---------------------------------------------------------
         
+        [Inject]
+        public void Construct(IFlowLogic logicBrain, FiniteStateMachine stateMachine)
+        {
+            _logicBrain = logicBrain;
+            _stateMachine = stateMachine;
+        }
+        
         private void Awake()
         {
             _mainCamera = Camera.main;
-            _logicBrain = new ApplicationFlowLogic();
             
             InitializeCommands();
             SubscribeEvents();
@@ -53,7 +56,8 @@ namespace ProjectCore
         public void Boot()
         {
             Debug.Log("[Flow] Booting Application...");
-            ExecuteIntent(FlowIntent.GoToMainMenu);
+            // ExecuteIntent(FlowIntent.GoToGame);
+            ResolveDecision(FlowContext.Boot, UICloseReasons.Game);
         }
 
         
@@ -63,15 +67,14 @@ namespace ProjectCore
             _commandMap = new Dictionary<FlowIntent, Action>
             {
                 // 1. Map Intents to specific Transitions (Explicit Binding)
-                { FlowIntent.GoToMainMenu,      () => PerformTransition(MainMenuTransition) },
                 { FlowIntent.GoToGame,          () => PerformTransition(GameStateTransition) },
                 { FlowIntent.GoToLevelFail,     () => PerformTransition(LevelFailTransition) },
 
                 // 2. Map Intents to Logic
-                { FlowIntent.ResumePrevious,    () => StateMachine.ShouldResumePreviousState() },
+                { FlowIntent.ResumePrevious,    () => _stateMachine.ShouldResumePreviousState() },
                 
                 // 3. Defaults
-                { FlowIntent.DefaultToMainMenu, () => PerformTransition(MainMenuTransition) }
+                { FlowIntent.DefaultToGame, () => PerformTransition(GameStateTransition) }
             };
         }
 
@@ -94,7 +97,7 @@ namespace ProjectCore
             else
             {
                 Debug.LogError($"[Flow] Missing binding for Intent: {intent}. Using Fallback.");
-                _commandMap[FlowIntent.DefaultToMainMenu]?.Invoke();
+                _commandMap[FlowIntent.DefaultToGame]?.Invoke();
             }
         }
 
@@ -113,7 +116,7 @@ namespace ProjectCore
                 viewTransition.Camera = _mainCamera;
             }
 
-            StateMachine.Transition(transition);
+            _stateMachine.Transition(transition);
         }
 
         // ---------------------------------------------------------
@@ -121,30 +124,24 @@ namespace ProjectCore
         // ---------------------------------------------------------
 
         private void OnGotoGame() => ExecuteIntent(FlowIntent.GoToGame);
-        private void OnGotoMainMenu() => ExecuteIntent(FlowIntent.GoToMainMenu);
         private void OnGotoLevelFail() => ExecuteIntent(FlowIntent.GoToLevelFail);
-
-        private void OnMainMenuClose(int value) => ResolveDecision(FlowContext.MainMenu, (UICloseReasons)value);
+        
         private void OnLevelFailViewClose(int value) => ResolveDecision(FlowContext.LevelFail, (UICloseReasons)value);
         
 
         private void SubscribeEvents()
         {
             if (GotoGame) GotoGame.Handler += OnGotoGame;
-            if (GotoMainMenu) GotoMainMenu.Handler += OnGotoMainMenu;
             if (GotoLevelFail) GotoLevelFail.Handler += OnGotoLevelFail;
             
-            if (MainMenuViewClosed) MainMenuViewClosed.Handler += OnMainMenuClose;
             if (LevelFailViewClosed) LevelFailViewClosed.Handler += OnLevelFailViewClose;
         }
 
         private void UnsubscribeEvents()
         {
             if (GotoGame) GotoGame.Handler -= OnGotoGame;
-            if (GotoMainMenu) GotoMainMenu.Handler -= OnGotoMainMenu;
             if (GotoLevelFail) GotoLevelFail.Handler -= OnGotoLevelFail;
             
-            if (MainMenuViewClosed) MainMenuViewClosed.Handler -= OnMainMenuClose;
             if (LevelFailViewClosed) LevelFailViewClosed.Handler -= OnLevelFailViewClose;
         }
     }

@@ -12,8 +12,6 @@ namespace ProjectCore
     {
         [SerializeField] private int IOSTargetFrameRate = 60;
         [SerializeField] private int AndroidTargetFrameRate = 60;
-
-        // [SerializeField] private FiniteStateMachine ApplicationStateMachine;
         [SerializeField] private TimeMachine.TimeMachine ApplicationTimeMachine;
 
         [SerializeField] private GameEvent AppPaused;

@@ -41,8 +41,13 @@ namespace ProjectCore.GamePlay
         
         public override IEnumerator Execute()
         {
-            if (CurrentPlayerScore != null) 
-                CurrentPlayerScore.SetValue(0);
+            if (CurrentPlayerScore == null)
+            {
+                Debug.LogError("[NormalGameState] Critical: CurrentPlayerScore not found!");
+                yield break;
+            } 
+            
+            CurrentPlayerScore.SetValue(0);
             
             //Run Base (Loads HUD)
             yield return base.Execute();

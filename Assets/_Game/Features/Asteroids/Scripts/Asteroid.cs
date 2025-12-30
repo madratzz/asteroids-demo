@@ -13,11 +13,13 @@ namespace ProjectGame.Features.Enemies
     {
         [Header("Config")]
         [SerializeField] private AsteroidSize Size;
-        [SerializeField] private int ScoreValue = 100;
         
         [Header("Architecture Dependencies")]
         [SerializeField] private Int CurrentPlayerScore; 
         [SerializeField] private GameEvent EnemyDestroyed;
+        
+        private int _asteroidScoreValue;
+        private int _damageValue;
         
         private Rigidbody2D _rb;
         private Action<Asteroid> _returnToPool;
@@ -35,37 +37,20 @@ namespace ProjectGame.Features.Enemies
             _rb.angularDamping = 0;
         }
         
-        public void Initialize(Vector2 position, float speed, Action<Asteroid> returnAction, 
-            Action<AsteroidSize, Vector3> splitAction)
+        public void Initialize(Vector2 position, AsteroidSize size, 
+            AsteroidSettingsSO settings, float baseSpeed, Action<Asteroid> returnAction, 
+            Action<AsteroidSize, Vector3> splitAction )
         {
+            Size = size;
+            _asteroidScoreValue = settings.GetScore(size);
+            _damageValue = settings.LivesDamage;
             _returnToPool = returnAction;
             _splitAction = splitAction;
-            
             transform.position = position;
 
-            // Randomize Rotation
-            float randomAngle = Random.Range(0f, 360f);
-            transform.rotation = Quaternion.Euler(0, 0, randomAngle);
-
-            // Randomize Direction
-            Vector2 randomDir = Random.insideUnitCircle.normalized;
-            
-            // Small asteroids move faster than large ones
-            float speedMultiplier = (Size == AsteroidSize.Small) ? 1.5f : 1.0f;
-            
-            
-            _rb.linearVelocity = randomDir * (speed * speedMultiplier);
-            _rb.angularVelocity = Random.Range(-50f, 50f); // Spin
-        }
-        
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.attachedRigidbody.TryGetComponent(out IDamageable damageable)) return;
-           
-            if (!other.CompareTag(PlayerTag)) return;
-            
-            damageable.TakeDamage(1); 
-            Die();
+            RandomizeAsteroidRotation();
+            float speedMultiplier = CalculateSpeedMultiplier(settings);
+            SetRandomMovement(settings, baseSpeed, speedMultiplier);
         }
         
         public void TakeDamage(int amount)
@@ -75,11 +60,10 @@ namespace ProjectGame.Features.Enemies
 
         private void Die()
         {
-            if (CurrentPlayerScore != null) CurrentPlayerScore.ApplyChange(ScoreValue);
+            if (CurrentPlayerScore != null) CurrentPlayerScore.ApplyChange(_asteroidScoreValue);
             if (EnemyDestroyed != null) EnemyDestroyed.Invoke();
             
             _splitAction?.Invoke(Size, transform.position);
-            
             Release();
         }
 
@@ -88,6 +72,41 @@ namespace ProjectGame.Features.Enemies
             _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0;
             _returnToPool?.Invoke(this);
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.attachedRigidbody == null) return;
+            if (!other.attachedRigidbody.TryGetComponent(out IDamageable damageable)) return;
+            if (!other.CompareTag(PlayerTag)) return;
+            
+            damageable.TakeDamage(_damageValue); 
+            Die();
+        }
+        
+        
+        private float CalculateSpeedMultiplier(AsteroidSettingsSO settings)
+        {
+            // Small asteroids move faster than large ones
+            float speedMultiplier = (Size == AsteroidSize.Small) 
+                ? settings.SmallSpeedMultiplier 
+                : settings.NormalSpeedMultiplier;
+            return speedMultiplier;
+        }
+
+        private void RandomizeAsteroidRotation()
+        {
+            // Randomize Rotation
+            float randomAngle = Random.Range(0f, 360f);
+            transform.rotation = Quaternion.Euler(0, 0, randomAngle);
+        }
+
+        private void SetRandomMovement(AsteroidSettingsSO settings, float baseSpeed, float speedMultiplier)
+        {
+            // Randomize Direction
+            Vector2 randomDir = Random.insideUnitCircle.normalized;
+            _rb.linearVelocity = randomDir * (baseSpeed * speedMultiplier);
+            _rb.angularVelocity = Random.Range(settings.MinSpin, settings.MaxSpin); // Spin
         }
     }
 }

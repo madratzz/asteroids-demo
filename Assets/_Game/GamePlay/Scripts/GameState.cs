@@ -91,18 +91,8 @@ namespace ProjectCore.GamePlay
 
         protected virtual void ResetState()
         {
-            //Release Addressable Memory
-            if (_hudHandle.IsValid())
-            {
-                Addressables.ReleaseInstance(_hudHandle);
-            }
-            _gameHud = null;
-
-            if (_levelHandle.IsValid())
-            {
-                Addressables.ReleaseInstance(_levelHandle);
-            }
-            _levelObject = null;
+            ReleaseHudInstance();
+            ReleaseLevelResources();
         }
 
         protected virtual void ShowLevelObjects()
@@ -120,6 +110,26 @@ namespace ProjectCore.GamePlay
             if (_levelObject != null) 
                 _levelObject.SetActive(false);
         }
+        
+        private void ReleaseLevelResources()
+        {
+            if (_levelHandle.IsValid())
+            {
+                Addressables.ReleaseInstance(_levelHandle);
+            }
 
+            _levelObject = null;
+        }
+
+        private void ReleaseHudInstance()
+        {
+            //Release Addressable Memory
+            if (_hudHandle.IsValid())
+            {
+                Addressables.ReleaseInstance(_hudHandle);
+            }
+
+            _gameHud = null;
+        }
     }
 }

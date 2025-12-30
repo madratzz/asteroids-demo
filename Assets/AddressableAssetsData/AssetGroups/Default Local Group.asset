@@ -28,7 +28,7 @@ MonoBehaviour:
     - Default
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a541e48d71d65b469d87e2ee73d9c12
-    m_Address: Features/Asteroids/AsteroidsSpawner
+    m_Address: Features/Waves/WaveSpawner
     m_ReadOnly: 0
     m_SerializedLabels:
     - Features

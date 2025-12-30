@@ -12,7 +12,6 @@ namespace ProjectGame.Features.Player.Controllers
     {
         [Header("Configuration")]
         [SerializeField] private PlayerSettingsSO Settings;
-        [SerializeField] private float RespawnDelay = 2.0f;
         
         [SerializeField] private Int PlayerLives;
 
@@ -49,7 +48,7 @@ namespace ProjectGame.Features.Player.Controllers
             
             SetPlayerActive(false);
             
-            yield return new WaitForSeconds(RespawnDelay);
+            yield return new WaitForSeconds(Settings.RespawnDelay);
 
             if (PlayerLives == null) yield break;
             

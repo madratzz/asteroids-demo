@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b509354948244ea911a8edb2170edf6, type: 3}
+  m_Name: AsteroidSettings
+  m_EditorClassIdentifier: Project.Runtime::AsteroidSettingsSO
+  BaseSpeed: 1
+  SmallSpeedMultiplier: 1.5
+  NormalSpeedMultiplier: 1
+  MinSpin: -50
+  MaxSpin: 50
+  ScoreLarge: 50
+  ScoreMedium: 100
+  ScoreSmall: 200
+  SplitRules:
+  - Source: 2
+    Child: 1
+    Count: 2
+  - Source: 1
+    Child: 0
+    Count: 2

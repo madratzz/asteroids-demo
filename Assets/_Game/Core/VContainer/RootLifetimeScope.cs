@@ -1,4 +1,5 @@
-﻿using ProjectCore.StateMachine;
+﻿using ProjectCore.Events;
+using ProjectCore.StateMachine;
 using ProjectGame.Features.Enemies;
 using ProjectGame.Features.Waves;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace ProjectCore
     public class RootLifetimeScope : LifetimeScope
     {
         [SerializeField] private FiniteStateMachine ApplicationStateMachine;
+        [SerializeField] private GameEvent TimeMachineTick;
         
         [Header("Configs")]
         [SerializeField] private WaveSettingsSO WaveSettings;
@@ -24,6 +26,9 @@ namespace ProjectCore
             builder.Register<ApplicationFlowLogic>(Lifetime.Singleton).AsImplementedInterfaces();
             //StateMachine
             builder.RegisterInstance(ApplicationStateMachine).AsSelf();
+            
+            //Register TimeMachineTick GameEvent with a key
+            builder.RegisterInstance(TimeMachineTick).AsSelf().Keyed("TimeMachineTick");
             
             //Configs
             builder.RegisterInstance(WaveSettings).AsSelf();

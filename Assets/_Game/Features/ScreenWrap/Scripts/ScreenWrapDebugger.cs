@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-
 namespace ProjectGame.Features.ScreenWrap
 {
     public class ScreenWrapDebugger : MonoBehaviour
     {
-        [SerializeField] private bool _showGizmos = true;
+        [SerializeField] private bool ShowGizmos = true;
         
         // Internal state for drawing
         private Vector3 _center;
@@ -24,7 +23,7 @@ namespace ProjectGame.Features.ScreenWrap
 
         private void OnDrawGizmos()
         {
-            if (!_showGizmos || !_isInitialized) return;
+            if (!ShowGizmos || !_isInitialized) return;
 
             // Draw Screen Edge (Yellow)
             Gizmos.color = Color.yellow;

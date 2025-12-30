@@ -76,8 +76,8 @@ namespace ProjectGame.Features.Enemies
         
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.attachedRigidbody == null) return;
             if (!other.attachedRigidbody.TryGetComponent(out IDamageable damageable)) return;
-           
             if (!other.CompareTag(PlayerTag)) return;
             
             damageable.TakeDamage(_damageValue); 

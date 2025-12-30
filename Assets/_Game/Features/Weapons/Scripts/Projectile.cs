@@ -48,6 +48,7 @@ namespace ProjectGame.Features.Weapons
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.attachedRigidbody == null) return;
             if (!other.attachedRigidbody.TryGetComponent<IDamageable>(out var damageable)) return;
             
             damageable.TakeDamage(_damageValue);

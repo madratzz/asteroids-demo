@@ -2,10 +2,10 @@
 using System.Collections;
 using ProjectCore.Events;
 using ProjectCore.StateMachine;
-using ProjectCore.Utilities;
 using ProjectCore.Variables;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
@@ -29,7 +29,7 @@ namespace ProjectCore
 
         private ApplicationFlowController _flowControllerInstance;
         
-        private const float SplashDelay = 0.5f;
+        private const float SPLASH_DELAY = 0.5f;
 
         public override IEnumerator Init(IState listener)
         {
@@ -57,26 +57,22 @@ namespace ProjectCore
 
         private IEnumerator InstantiateApplicationFlowController()
         {
-            return AddressablesHelper.InstantiateGameObject(
-                ApplicationFlowControllerReference,
-                (controller, handle) =>
-                {
-                    _flowControllerInstance = controller
-                        .GetComponent<ApplicationFlowController>();
-                    
-                    if (_flowControllerInstance == null)
-                        Debug.LogError("[SplashState] Critical: Core systems failed to load.");
-                    
-                    var container = LifetimeScope.Find<RootLifetimeScope>().Container;
-                    container.InjectGameObject(controller); //Inject the Flow Controller via VContainer
-                }
-            );
+            var handle =  Addressables.LoadAssetAsync<GameObject>(ApplicationFlowControllerReference);
+
+            while (!handle.IsDone) yield return null;
+
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                var container = LifetimeScope.Find<RootLifetimeScope>().Container;
+                _flowControllerInstance = container.Instantiate(handle.Result.GetComponent<ApplicationFlowController>());
+            }
+            
         }
 
         private IEnumerator LoadGameScene()
         {
             // Artificial delay want the splash to linger
-            yield return new WaitForSeconds(SplashDelay);
+            yield return new WaitForSeconds(SPLASH_DELAY);
 
             _sceneLoadingOperation = SceneManager.LoadSceneAsync(SceneIndex, LoadSceneMode.Additive);
             if (_sceneLoadingOperation != null)

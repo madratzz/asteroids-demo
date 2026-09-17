@@ -28,6 +28,9 @@ namespace ProjectCore
         private IFlowLogic _logicBrain;
         private Dictionary<FlowIntent, Action> _commandMap;
         private Camera _mainCamera;
+        
+        const int RESUME_FLOW_RESUME_TIME = 15;
+        const int RESUME_FLOW_MM_TIME = 86000;
 
         // ---------------------------------------------------------
         // INITIALIZATION
@@ -56,7 +59,6 @@ namespace ProjectCore
         public void Boot()
         {
             Debug.Log("[Flow] Booting Application...");
-            // ExecuteIntent(FlowIntent.GoToGame);
             ResolveDecision(FlowContext.Boot, UICloseReasons.Game);
         }
 

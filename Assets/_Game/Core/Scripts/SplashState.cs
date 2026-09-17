@@ -2,7 +2,6 @@
 using System.Collections;
 using ProjectCore.Events;
 using ProjectCore.StateMachine;
-using ProjectCore.Utilities;
 using ProjectCore.Variables;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -30,7 +29,7 @@ namespace ProjectCore
 
         private ApplicationFlowController _flowControllerInstance;
         
-        private const float SplashDelay = 0.5f;
+        private const float SPLASH_DELAY = 0.5f;
 
         public override IEnumerator Init(IState listener)
         {
@@ -73,7 +72,7 @@ namespace ProjectCore
         private IEnumerator LoadGameScene()
         {
             // Artificial delay want the splash to linger
-            yield return new WaitForSeconds(SplashDelay);
+            yield return new WaitForSeconds(SPLASH_DELAY);
 
             _sceneLoadingOperation = SceneManager.LoadSceneAsync(SceneIndex, LoadSceneMode.Additive);
             if (_sceneLoadingOperation != null)
